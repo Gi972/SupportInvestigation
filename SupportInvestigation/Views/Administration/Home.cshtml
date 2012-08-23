@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Administration";
+}
+
+<h1>Bienvenue sur la page d'administration</h1>
+
+
+<h3>Que voulez vous faire?</h3>
+<div id=ClassUser >
+<ul>
+<li>@Html.ActionLink("Creer un utilisateur", "CreateUser")</li>
+<li>@Html.ActionLink("Modifier un utilisateur", "ChoiceUser")</li>
+<li>@Html.ActionLink("Supprimer un utilisateur", "ChoiceUserToDelete")</li>
+<li>@Html.ActionLink("Voir la liste des utilisateurs", "ListUser")</li>
+</ul>
+</div>
+
+<hr />
+
+<div id=ClassMarchand >
+<ul>
+
+<li>@Html.ActionLink("Creer un marchand", "CreateMarchand")</li>
+<li>@Html.ActionLink("Modifier un marchand", "ChoiceMarchand")</li>
+<li>@Html.ActionLink("Supprimer un marchand", "ChoiceMarchandToDelete")</li>
+<li>@Html.ActionLink("Voir la liste des marchands", "ListMarchand")</li>
+</ul>
+</div>

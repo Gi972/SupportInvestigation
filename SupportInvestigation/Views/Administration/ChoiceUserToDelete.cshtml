@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "supprimer un utilisateur";
+}
+
+
+<div>Quel utilisateur voulez vous supprimer</div>
+
+@using (Html.BeginForm() )
+{
+
+@Html.DropDownList("UserID")
+
+    <p>
+        <input type="submit" value="Supprimer"/>
+    </p>
+    
+}

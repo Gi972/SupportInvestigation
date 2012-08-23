@@ -1,0 +1,38 @@
+﻿@model SupportInvestigation.Models.Model.Marchand
+
+@{
+    ViewBag.Title = "DeleteMarchand";
+}
+
+<h2>DeleteMarchand</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Marchand</legend>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">Url</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Url)
+    </div>
+
+    <div class="display-label">ContactName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ContactName)
+    </div>
+
+    <div class="display-label">Phone</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

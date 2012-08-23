@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "supprimer un marchand";
+}
+
+<div>Quel marchand voulez vous Modifier?</div>
+
+@using (Html.BeginForm() )
+{
+
+@Html.DropDownList("MarchandID")
+
+    <p>
+        <input type="submit" value="Supprimer"/>
+    </p>
+    
+}

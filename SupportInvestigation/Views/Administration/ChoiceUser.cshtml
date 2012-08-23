@@ -1,0 +1,15 @@
+﻿@model IEnumerable<SupportInvestigation.Models.Model.User>
+
+
+<div>Quel utilisateur voulez vous Modifier?</div>
+
+@using (Html.BeginForm())
+{
+
+@Html.DropDownList("UserID")
+
+    <p>
+        <input type="submit" value="Modifier"/>
+    </p>
+    
+}
