@@ -1,0 +1,63 @@
+﻿@model SupportInvestigation.Models.Model.Ticket
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Ticket</legend>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">StateSolved</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StateSolved)
+    </div>
+
+    <div class="display-label">stateRead</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.stateRead)
+    </div>
+
+    <div class="display-label">DateCreation</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateCreation)
+    </div>
+
+    <div class="display-label">DateModification</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateModification)
+    </div>
+
+    <div class="display-label">Summary</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Summary)
+    </div>
+
+    <div class="display-label">Contents</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Contents)
+    </div>
+
+    <div class="display-label">IDMarchand</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IDMarchand)
+    </div>
+
+    <div class="display-label">IDUser</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IDUser)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

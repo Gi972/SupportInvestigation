@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SupportInvestigation.Models.Model.Hypothesis>
+<script type="text/javascript"> $("li.lien2").addClass(" active")</script>
+
+@{
+    ViewBag.Title = "ListHypo";
+}
+
+@section navBar{
+<ul>
+<li>Lister par marchands</li>
+<li>Lister par développeurs</li>
+<li>@Html.ActionLink("Liste des investigation","ListHypo","Investigation")</li>
+</ul>
+
+}
+
+<legend>Dernières investigations</legend>
+<table class="table">
+    <tr>
+        <th>
+            iD
+        </th>
+        <th>
+            titre
+        </th>
+        <th>
+            Date
+        </th>  
+        <th>
+            Ticket
+        </th>
+          <th>
+            iDTicket
+        </th>
+         
+        <th>
+            Auteur
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.hypothesisID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tickets.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDTicket)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Users.Login)
+        </td>
+        <td>
+        @Html.ActionLink("Lire", "Details", new { id = item.hypothesisID }, new { @class="btn btn-small"})
+        </td>
+    </tr>
+}
+
+</table>
+

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<SupportInvestigation.Models.Model.Ticket>
+<script type="text/javascript">$("li.lien3").addClass(" active")</script>
+@{
+    ViewBag.Title = "Archived";
+}
+@section navBar{
+<ul>
+<li>Lister par marchands</li>
+<li>Lister par développeurs</li>
+<li>@Html.ActionLink("Liste des investigation","ListHypo","Investigation")</li>
+</ul>
+
+}
+<h2>Archived</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            StateSolved
+        </th>
+        <th>
+            stateRead
+        </th>
+        <th>
+            DateCreation
+        </th>
+        <th>
+            DateModification
+        </th>
+        <th>
+            Summary
+        </th>
+        <th>
+            Contents
+        </th>
+        <th>
+            IDMarchand
+        </th>
+        <th>
+            IDUser
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StateSolved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stateRead)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateModification)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Summary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contents)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDMarchand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDUser)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TicketID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TicketID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TicketID })
+        </td>
+    </tr>
+}
+
+</table>

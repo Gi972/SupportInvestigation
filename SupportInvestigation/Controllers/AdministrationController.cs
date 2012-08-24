@@ -28,14 +28,8 @@ namespace SupportInvestigation.Controllers
             MsiRepoMarchand = repositoryMarchand;
         }
 
-
-
-
-
-        int levelAdmin = 0;
-        int levelUser = 1;
-
-
+        //int levelAdmin = 0;
+        // int levelUser = 1;
 
         //
         // GET: /Administration/connect
@@ -50,13 +44,15 @@ namespace SupportInvestigation.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, levelAdmin))
+                
+                if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, model.Level ))
                 {
+                   
                     FormsAuthentication.SetAuthCookie(model.Login, false);
-
+                
                     return RedirectToAction("Home");
                 }
-                else if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, levelUser))
+                else if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, model.Level))
                 {
                     FormsAuthentication.SetAuthCookie(model.Login, false);
 

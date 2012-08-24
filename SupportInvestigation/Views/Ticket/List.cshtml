@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SupportInvestigation.Models.Model.Ticket>
+<script type="text/javascript">$("li.lien1").addClass(" active")</script>
+@{
+    ViewBag.Title = "Derniers tickets";
+}
+@section navBar{
+<ul>
+<li>Lister par marchands</li>
+<li>Lister par développeurs</li>
+<li>@Html.ActionLink("Liste des investigation","ListHypo","Investigation")</li>
+</ul>
+
+}
+
+<legend>Dernier Tickets</legend>
+<table class="table">
+    <tr>
+        <th>
+            Lu
+        </th>
+        <th>
+            Titre
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Résumé
+        </th>
+        <th>
+           Url
+        </th>
+        <th>
+            Auteur
+        </th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.stateRead)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marchands.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.Login)
+            </td>
+            <td>
+                @Html.ActionLink("Lire", "Details", new { id = item.TicketID }, new { @class="btn btn-small"}) 
+              
+            </td>
+        </tr>
+    }
+</table>
+

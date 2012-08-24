@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SIDatabaseModel", "FK_Hypothesis_Tickets", "Tickets", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SupportInvestigation.Models.Model.Ticket), "Hypothesis", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SupportInvestigation.Models.Model.Hypothesis), true)]
 [assembly: EdmRelationshipAttribute("SIDatabaseModel", "FK_Tickets_Marchands", "Marchands", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SupportInvestigation.Models.Model.Marchand), "Tickets", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SupportInvestigation.Models.Model.Ticket), true)]
 [assembly: EdmRelationshipAttribute("SIDatabaseModel", "FK_Tickets_Users", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SupportInvestigation.Models.Model.User), "Ticket", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SupportInvestigation.Models.Model.Ticket), true)]
+[assembly: EdmRelationshipAttribute("SIDatabaseModel", "FK_Hypothesis_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SupportInvestigation.Models.Model.User), "Hypothesis", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SupportInvestigation.Models.Model.Hypothesis), true)]
 
 #endregion
 
@@ -407,6 +408,30 @@ namespace SupportInvestigation.Models.Model
         private global::System.Int32 _IDTicket;
         partial void OnIDTicketChanging(global::System.Int32 value);
         partial void OnIDTicketChanged();
+    
+        /// <summary>
+        /// Aucune documentation sur les métadonnées n'est disponible.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> IDUser
+        {
+            get
+            {
+                return _IDUser;
+            }
+            set
+            {
+                OnIDUserChanging(value);
+                ReportPropertyChanging("IDUser");
+                _IDUser = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IDUser");
+                OnIDUserChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _IDUser;
+        partial void OnIDUserChanging(Nullable<global::System.Int32> value);
+        partial void OnIDUserChanged();
 
         #endregion
     
@@ -446,6 +471,44 @@ namespace SupportInvestigation.Models.Model
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Ticket>("SIDatabaseModel.FK_Hypothesis_Tickets", "Tickets", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// Aucune documentation sur les métadonnées n'est disponible.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SIDatabaseModel", "FK_Hypothesis_Users", "User")]
+        public User Users
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SIDatabaseModel.FK_Hypothesis_Users", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SIDatabaseModel.FK_Hypothesis_Users", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// Aucune documentation sur les métadonnées n'est disponible.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UsersReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SIDatabaseModel.FK_Hypothesis_Users", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SIDatabaseModel.FK_Hypothesis_Users", "User", value);
                 }
             }
         }
@@ -1359,6 +1422,28 @@ namespace SupportInvestigation.Models.Model
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Ticket>("SIDatabaseModel.FK_Tickets_Users", "Ticket", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// Aucune documentation sur les métadonnées n'est disponible.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SIDatabaseModel", "FK_Hypothesis_Users", "Hypothesis")]
+        public EntityCollection<Hypothesis> Hypothesis
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Hypothesis>("SIDatabaseModel.FK_Hypothesis_Users", "Hypothesis");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Hypothesis>("SIDatabaseModel.FK_Hypothesis_Users", "Hypothesis", value);
                 }
             }
         }

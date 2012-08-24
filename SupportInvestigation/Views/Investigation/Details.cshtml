@@ -1,0 +1,67 @@
+﻿@model SupportInvestigation.Models.CustomView.InvestigationDetailViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+@section navBar{
+
+<h5></h5>
+        <br />
+        <button class="btn btn-large btn-block" type="button">  @Html.ActionLink("Edit", "Edit", new { id = Model.Ticket.TicketID }) </button>
+        <button class="btn btn-large btn-block" type="button">@Html.ActionLink("Effacer", "Delete")</button>
+        <button class="btn btn-large btn-block" type="button">@Html.ActionLink("Archiver", "Solved")</button>
+        <br />
+        <br />
+
+        <button class="btn btn-large btn-block" type="button"> @Html.ActionLink("Retourner à la liste", "Index")</button>
+        <br />
+        <br />
+        <br />
+<p>Date de création: @Html.DisplayFor(model => model.Ticket.DateCreation)</p>
+<p>derniere modification:  @Html.DisplayFor(model => model.Ticket.DateModification)</p>
+}
+
+<h2>@Html.DisplayFor(model => model.Ticket.Title)</h2>
+
+<fieldset>
+    <legend>@Html.DisplayFor(model => model.Ticket.Summary)</legend>   
+ <div class="BodyContent">
+   <p>@Html.DisplayFor(model => model.Ticket.Contents)</p>
+
+</div>
+    <div class="pull-right"><strong>Auteur : </strong><em>@Html.DisplayFor(model => model.Ticket.Users.Login)</em></div>
+</fieldset>
+
+
+<h2>Votre investigation</h2>
+
+<fieldset>
+    <legend>@Html.DisplayFor(model => model.hypothese.title)</legend>   
+ <div class="BodyContent">
+   <p>@Html.DisplayFor(model => model.hypothese.Contents)</p>
+
+</div>
+    <div class="pull-right"><strong>Auteur : </strong><em>@Html.DisplayFor(model => model.hypothese.Users.Login)</em></div>
+</fieldset>
+
+
+<br />
+<h2>Autres investigations</h2>
+
+@foreach (var item in Model.Investigation)
+{
+     <form>
+     <legend>@item.title</legend>
+     <div class="BodyHypoContent">
+     <p>@item.Contents</p>
+     </div>
+    </form>
+    <hr />
+<div class="pull-right"><strong>Auteur : </strong><em>@item.Users.Login</em></div>
+    
+    <br />   
+    <br />
+}
+
+
+@Html.ActionLink("Ajouter une autre hypothese", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class="myclass"})

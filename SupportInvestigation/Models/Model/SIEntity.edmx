@@ -11,8 +11,8 @@
           <EntitySet Name="sysdiagrams" EntityType="SIDatabaseModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Tickets" EntityType="SIDatabaseModel.Store.Tickets" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="SIDatabaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Hypothesis_Tickets" Association="SIDatabaseModel.Store.FK_Hypothesis_Tickets">
-            <End Role="Tickets" EntitySet="Tickets" />
+          <AssociationSet Name="FK_Hypothesis_Users" Association="SIDatabaseModel.Store.FK_Hypothesis_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="Hypothesis" EntitySet="Hypothesis" />
           </AssociationSet>
           <AssociationSet Name="FK_Tickets_Marchands" Association="SIDatabaseModel.Store.FK_Tickets_Marchands">
@@ -35,6 +35,7 @@
           <Property Name="StateSolved" Type="int" Nullable="false" />
           <Property Name="Contents" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="IDTicket" Type="int" Nullable="false" />
+          <Property Name="IDUser" Type="int" />
         </EntityType>
         <EntityType Name="Marchands">
           <Key>
@@ -81,15 +82,15 @@
           <Property Name="Mail" Type="varchar" Nullable="false" MaxLength="150" />
           <Property Name="Level" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Hypothesis_Tickets">
-          <End Role="Tickets" Type="SIDatabaseModel.Store.Tickets" Multiplicity="1" />
+        <Association Name="FK_Hypothesis_Users">
+          <End Role="Users" Type="SIDatabaseModel.Store.Users" Multiplicity="0..1" />
           <End Role="Hypothesis" Type="SIDatabaseModel.Store.Hypothesis" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tickets">
-              <PropertyRef Name="TicketID" />
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Hypothesis">
-              <PropertyRef Name="IDTicket" />
+              <PropertyRef Name="IDUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -158,41 +159,47 @@
           <EntitySet Name="sysdiagrams" EntityType="SIDatabaseModel.sysdiagrams" />
           <EntitySet Name="Tickets" EntityType="SIDatabaseModel.Ticket" />
           <AssociationSet Name="FK_Hypothesis_Tickets" Association="SIDatabaseModel.FK_Hypothesis_Tickets">
-            <End Role="Tickets" EntitySet="Tickets" />
-            <End Role="Hypothesis" EntitySet="Hypothesis" />
+            <End EntitySet="Tickets" Role="Tickets" />
+            <End EntitySet="Hypothesis" Role="Hypothesis" />
           </AssociationSet>
           <AssociationSet Name="FK_Tickets_Marchands" Association="SIDatabaseModel.FK_Tickets_Marchands">
-            <End Role="Marchands" EntitySet="Marchands" />
-            <End Role="Tickets" EntitySet="Tickets" />
+            <End EntitySet="Marchands" Role="Marchands" />
+            <End EntitySet="Tickets" Role="Tickets" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="SIDatabaseModel.User" />
           <AssociationSet Name="FK_Tickets_Users" Association="SIDatabaseModel.FK_Tickets_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Ticket" EntitySet="Tickets" />
+            <End EntitySet="Users" Role="Users" />
+            <End EntitySet="Tickets" Role="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hypothesis_Users" Association="SIDatabaseModel.FK_Hypothesis_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Hypothesis" EntitySet="Hypothesis" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Hypothesis">
           <Key>
             <PropertyRef Name="hypothesisID" />
           </Key>
-          <Property Name="hypothesisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="DateCreation" Type="DateTime" Nullable="false" />
+          <Property Name="hypothesisID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="DateCreation" Nullable="false" Type="DateTime" />
           <Property Name="DateModification" Type="DateTime" />
-          <Property Name="StateSolved" Type="Int32" Nullable="false" />
-          <Property Name="Contents" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="IDTicket" Type="Int32" Nullable="false" />
+          <Property Name="StateSolved" Nullable="false" Type="Int32" />
+          <Property Name="Contents" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="IDTicket" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Tickets" Relationship="SIDatabaseModel.FK_Hypothesis_Tickets" FromRole="Hypothesis" ToRole="Tickets" />
+          <Property Name="IDUser" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="SIDatabaseModel.FK_Hypothesis_Users" FromRole="Hypothesis" ToRole="User" />
         </EntityType>
         <EntityType Name="Marchand">
           <Key>
             <PropertyRef Name="MarchandID" />
           </Key>
-          <Property Name="MarchandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
-          <Property Name="Url" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
-          <Property Name="ContactName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="Phone" Type="Int32" Nullable="false" />
+          <Property Name="MarchandID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Name" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Url" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="ContactName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Phone" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Tickets" Relationship="SIDatabaseModel.FK_Tickets_Marchands" FromRole="Marchands" ToRole="Tickets" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -209,23 +216,23 @@
           <Key>
             <PropertyRef Name="TicketID" />
           </Key>
-          <Property Name="TicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="StateSolved" Type="Int32" Nullable="false" />
-          <Property Name="stateRead" Type="Int32" Nullable="false" />
-          <Property Name="DateCreation" Type="DateTime" Nullable="false" />
-          <Property Name="DateModification" Type="DateTime" Nullable="false" />
-          <Property Name="Summary" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
-          <Property Name="Contents" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="IDMarchand" Type="Int32" Nullable="false" />
-          <Property Name="IDUser" Type="Int32" Nullable="false" />
+          <Property Name="TicketID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="StateSolved" Nullable="false" Type="Int32" />
+          <Property Name="stateRead" Nullable="false" Type="Int32" />
+          <Property Name="DateCreation" Nullable="false" Type="DateTime" />
+          <Property Name="DateModification" Nullable="false" Type="DateTime" />
+          <Property Name="Summary" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Contents" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="IDMarchand" Nullable="false" Type="Int32" />
+          <Property Name="IDUser" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Hypothesis" Relationship="SIDatabaseModel.FK_Hypothesis_Tickets" FromRole="Tickets" ToRole="Hypothesis" />
           <NavigationProperty Name="Marchands" Relationship="SIDatabaseModel.FK_Tickets_Marchands" FromRole="Tickets" ToRole="Marchands" />
           <NavigationProperty Name="Users" Relationship="SIDatabaseModel.FK_Tickets_Users" FromRole="Ticket" ToRole="Users" />
         </EntityType>
         <Association Name="FK_Hypothesis_Tickets">
-          <End Role="Tickets" Type="SIDatabaseModel.Ticket" Multiplicity="1" />
-          <End Role="Hypothesis" Type="SIDatabaseModel.Hypothesis" Multiplicity="*" />
+          <End Type="SIDatabaseModel.Ticket" Multiplicity="1" Role="Tickets" />
+          <End Type="SIDatabaseModel.Hypothesis" Multiplicity="*" Role="Hypothesis" />
           <ReferentialConstraint>
             <Principal Role="Tickets">
               <PropertyRef Name="TicketID" />
@@ -236,8 +243,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tickets_Marchands">
-          <End Type="SIDatabaseModel.Marchand" Role="Marchands" Multiplicity="1" />
-          <End Type="SIDatabaseModel.Ticket" Role="Tickets" Multiplicity="*" />
+          <End Type="SIDatabaseModel.Marchand" Multiplicity="1" Role="Marchands" />
+          <End Type="SIDatabaseModel.Ticket" Multiplicity="*" Role="Tickets" />
           <ReferentialConstraint>
             <Principal Role="Marchands">
               <PropertyRef Name="MarchandID" />
@@ -251,21 +258,34 @@
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Type="Int32" Name="UserID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Login" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Password" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Mail" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="Level" Nullable="false" />
+          <Property Name="UserID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Login" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Password" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Mail" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Level" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Tickets" Relationship="SIDatabaseModel.FK_Tickets_Users" FromRole="Users" ToRole="Ticket" />
+          <NavigationProperty Name="Hypothesis" Relationship="SIDatabaseModel.FK_Hypothesis_Users" FromRole="User" ToRole="Hypothesis" />
         </EntityType>
         <Association Name="FK_Tickets_Users">
-          <End Type="SIDatabaseModel.User" Role="Users" Multiplicity="1" />
-          <End Type="SIDatabaseModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Type="SIDatabaseModel.User" Multiplicity="1" Role="Users" />
+          <End Type="SIDatabaseModel.Ticket" Multiplicity="*" Role="Ticket" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Ticket">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hypothesis_Users">
+          <End Type="SIDatabaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="SIDatabaseModel.Hypothesis" Role="Hypothesis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Hypothesis">
               <PropertyRef Name="IDUser" />
             </Dependent>
           </ReferentialConstraint>
@@ -277,7 +297,8 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SIDatabaseModelStoreContainer" CdmEntityContainer="SIDatabaseEntities">
           <EntitySetMapping Name="Hypothesis"><EntityTypeMapping TypeName="SIDatabaseModel.Hypothesis"><MappingFragment StoreEntitySet="Hypothesis">
-            <ScalarProperty Name="hypothesisID" ColumnName="hypothesisID" />
+            <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="hypothesisID" ColumnName="hypothesisID" />
             <ScalarProperty Name="title" ColumnName="title" />
             <ScalarProperty Name="DateCreation" ColumnName="DateCreation" />
             <ScalarProperty Name="DateModification" ColumnName="DateModification" />
@@ -343,23 +364,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="SIEntity">
-        <EntityTypeShape EntityType="SIDatabaseModel.Hypothesis" Width="1.5" PointX="5.25" PointY="1.375" Height="2.2496956380208335" IsExpanded="true" />
-        <EntityTypeShape EntityType="SIDatabaseModel.Marchand" Width="1.5" PointX="0.75" PointY="1.5" Height="1.9210009765624996" IsExpanded="true" />
-        <EntityTypeShape EntityType="SIDatabaseModel.sysdiagrams" Width="1.5" PointX="7.375" PointY="6.125" Height="1.7566536458333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="SIDatabaseModel.Ticket" Width="1.5" PointX="3" PointY="1" Height="3.0714322916666661" IsExpanded="true" />
-        <AssociationConnector Association="SIDatabaseModel.FK_Hypothesis_Tickets" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="2.4998478190104167" />
-          <ConnectorPoint PointX="5.25" PointY="2.4998478190104167" />
+        <EntityTypeShape EntityType="SIDatabaseModel.Hypothesis" PointX="6.75" PointY="2.5" Width="1.5" Height="2.5783902994791661" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIDatabaseModel.Marchand" PointX="0.625" PointY="3.125" Width="1.5" Height="1.9210009765624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIDatabaseModel.sysdiagrams" Width="1.5" PointX="11.375" PointY="4.875" Height="1.7566536458333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIDatabaseModel.Ticket" PointX="3.75" PointY="3.875" Width="1.5" Height="3.0714322916666661" IsExpanded="true" />
+        <AssociationConnector ManuallyRouted="false" Association="SIDatabaseModel.FK_Hypothesis_Tickets">
+          <ConnectorPoint PointX="5.25" PointY="4.4766951497395828" />
+          <ConnectorPoint PointX="6.75" PointY="4.4766951497395828" />
         </AssociationConnector>
-        <AssociationConnector Association="SIDatabaseModel.FK_Tickets_Marchands" >
-          <ConnectorPoint PointX="2.25" PointY="2.46050048828125" />
-          <ConnectorPoint PointX="3" PointY="2.46050048828125" />
+        <AssociationConnector Association="SIDatabaseModel.FK_Tickets_Marchands">
+          <ConnectorPoint PointX="2.125" PointY="4.46050048828125" />
+          <ConnectorPoint PointX="3.75" PointY="4.46050048828125" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="SIDatabaseModel.User" Width="1.5" PointX="0.75" PointY="5.875" Height="1.9210009765624996" />
-        <AssociationConnector Association="SIDatabaseModel.FK_Tickets_Users" >
-          <ConnectorPoint PointX="2.25" PointY="6.83550048828125" />
-          <ConnectorPoint PointX="3.75" PointY="6.83550048828125" />
-          <ConnectorPoint PointX="3.75" PointY="4.0714322916666665" />
+        <EntityTypeShape EntityType="SIDatabaseModel.User" PointX="3.25" PointY="0.625" Width="1.5" Height="2.0853483072916656" />
+        <AssociationConnector Association="SIDatabaseModel.FK_Tickets_Users">
+          <ConnectorPoint PointX="4.25" PointY="2.7103483072916661" />
+          <ConnectorPoint PointX="4.25" PointY="3.875" />
+        </AssociationConnector>
+        <AssociationConnector Association="SIDatabaseModel.FK_Hypothesis_Users" >
+          <ConnectorPoint PointX="4.75" PointY="1.5624995" />
+          <ConnectorPoint PointX="7.5" PointY="1.5624995" />
+          <ConnectorPoint PointX="7.5" PointY="2.5" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
