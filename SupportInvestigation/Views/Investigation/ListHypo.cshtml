@@ -6,11 +6,12 @@
 }
 
 @section navBar{
-<ul>
-<li>Lister par marchands</li>
-<li>Lister par développeurs</li>
-<li>@Html.ActionLink("Liste des investigation","ListHypo","Investigation")</li>
-</ul>
+<form>
+<legend>Trier par:</legend>
+<button class="btn btn-large btn-block btn-info" type="button">Marchand</button>
+<button class="btn btn-large btn-block btn-info" type="button">Auteur</button>
+<button class="btn btn-large btn-block btn-info" type="button">Date</button>
+</form>
 
 }
 

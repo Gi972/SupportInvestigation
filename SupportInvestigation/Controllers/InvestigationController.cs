@@ -96,9 +96,10 @@ namespace SupportInvestigation.Controllers
         //voit en détail une investigation
         public ActionResult Details(int id)
         {
-            Ticket ticket = MsiRepoTicket.GetTicketBelongToInvestigation(id);
-            List<Hypothesis> list = MsiRepoHypo.GestInvestigationByTicket(ticket.TicketID);
             Hypothesis hypothese = MsiRepoHypo.GetInvestigation(id);
+            Ticket ticket = MsiRepoTicket.GetTicketBelongToInvestigation(hypothese.IDTicket);
+            List<Hypothesis> list = MsiRepoHypo.GestInvestigationByTicket(ticket.TicketID);
+            
 
             InvestigationDetailViewModel detailDuticket = new InvestigationDetailViewModel(hypothese,ticket, list);
 

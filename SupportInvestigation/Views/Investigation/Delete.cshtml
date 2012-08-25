@@ -4,50 +4,42 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Alerte Suppression!!!</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Etes vous sûre de vouloir supprimer cette solution?</h3>
 <fieldset>
-    <legend>Hypothesis</legend>
+    <legend>Titre @Html.TextAreaFor(model => model.title, new { @class = "field span12", @rows="1", @maxlength="45", @disabled="disabled"})</legend>
 
-    <div class="display-label">title</div>
+   
+
     <div class="display-field">
-        @Html.DisplayFor(model => model.title)
+        @Html.HiddenFor(model => model.DateCreation)
     </div>
 
-    <div class="display-label">DateCreation</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.DateCreation)
+        @Html.HiddenFor(model => model.DateModification)
     </div>
 
-    <div class="display-label">DateModification</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.DateModification)
+        @Html.HiddenFor(model => model.StateSolved)
+    </div>
+    <div class="editor-field">
+            @Html.TextAreaFor(model => model.Contents, new { @class = "field span12", @rows = "20", @disabled = "disabled" })
+
+    
+
+    <div class="display-field">
+        @Html.HiddenFor(model => model.IDTicket)
     </div>
 
-    <div class="display-label">StateSolved</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.StateSolved)
-    </div>
-
-    <div class="display-label">Contents</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Contents)
-    </div>
-
-    <div class="display-label">IDTicket</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IDTicket)
-    </div>
-
-    <div class="display-label">IDUser</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IDUser)
+        @Html.HiddenFor(model => model.IDUser)
     </div>
 </fieldset>
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        <input type="submit" value="Effacer"  class="btn btn-large btn-danger" /> |
+        @Html.ActionLink("Retourner sur la liste", "ListHypo", new { }, new { @class = "btn btn-large btn-inverse" })
     </p>
 }

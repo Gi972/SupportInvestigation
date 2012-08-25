@@ -4,48 +4,37 @@
     ViewBag.Title = "Archived";
 }
 @section navBar{
-<ul>
-<li>Lister par marchands</li>
-<li>Lister par développeurs</li>
-<li>@Html.ActionLink("Liste des investigation","ListHypo","Investigation")</li>
-</ul>
+<form>
+<legend>Trier par:</legend>
+<button class="btn btn-large btn-block btn-info" type="button">Marchand</button>
+<button class="btn btn-large btn-block btn-info" type="button">Auteur</button>
+<button class="btn btn-large btn-block btn-info" type="button">Date</button>
+</form>
 
 }
-<h2>Archived</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+<form>
+<fieldset>
+<legend>Les archives</legend>
+<table class="table">
     <tr>
         <th>
-            Title
+            Titre
+        </th>
+        
+        <th>
+            Date
+        </th>     
+        <th>
+            Résumé
+        </th>
+       
+        <th>
+            Url
         </th>
         <th>
-            StateSolved
+            Auteur
         </th>
-        <th>
-            stateRead
-        </th>
-        <th>
-            DateCreation
-        </th>
-        <th>
-            DateModification
-        </th>
-        <th>
-            Summary
-        </th>
-        <th>
-            Contents
-        </th>
-        <th>
-            IDMarchand
-        </th>
-        <th>
-            IDUser
-        </th>
-        <th></th>
+     
     </tr>
 
 @foreach (var item in Model) {
@@ -53,36 +42,27 @@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StateSolved)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.stateRead)
-        </td>
+       
         <td>
             @Html.DisplayFor(modelItem => item.DateCreation)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateModification)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Summary)
         </td>
+       
         <td>
-            @Html.DisplayFor(modelItem => item.Contents)
+            @Html.DisplayFor(modelItem => item.Marchands.Url)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IDMarchand)
+            @Html.DisplayFor(modelItem => item.Users.Login)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IDUser)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TicketID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TicketID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TicketID })
+                @Html.ActionLink("Lire", "Details", new { id = item.TicketID }, new { @class="btn btn-small"}) 
         </td>
     </tr>
 }
 
 </table>
+</fieldset>
+</form>

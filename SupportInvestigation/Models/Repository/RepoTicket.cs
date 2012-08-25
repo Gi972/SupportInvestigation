@@ -42,6 +42,13 @@ namespace SupportInvestigation.Models.Repository
             ////MsiRepo.ObjectStateManager.ChangeObjectState(ticket, EntityState.Modified);
         }
 
+        public void UpdateIcketRead(int id)
+        {
+            var ticket = MsiRepo.Tickets.Single(d => d.TicketID == id);
+            ticket.stateRead = 1;
+            MsiRepo.SaveChanges();
+        }
+
         public void Delete(Ticket ticket)
         {
             MsiRepo.Tickets.DeleteObject(ticket);
@@ -117,6 +124,9 @@ namespace SupportInvestigation.Models.Repository
         {
             MsiRepo.SaveChanges();
         }
+
+
+       
     }
 
 

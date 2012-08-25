@@ -28,8 +28,8 @@
                 <div class="container">
                     <a class="brand" href="#">Marchand Support investigation</a>
                     <ul class="nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>   
-                        <li>@Html.ActionLink("Administration", "Home", "Administration")</li>
+                       <li><a href="/Home/Index"><i class="icon-home"></i> Accueil</a></li>
+                        <li><a href="/Administration/Home"><i class="icon-user"></i> Administration</a></li>
                     </ul>
                     <ul class="nav pull-right">
                         @Html.Partial("_LogOnPartial")
@@ -45,21 +45,20 @@
         <li class="lien1">@Html.ActionLink("Tickets", "List", "Ticket")</li>
          <li class="lien2">@Html.ActionLink("Investigations", "ListHypo", "Investigation")</li>
          <li class="lien3">@Html.ActionLink("Archives", "Archived", "Ticket")</li>
-       <button class="btn btn-primary pull-right">Créer un ticket</button>
+       @Html.ActionLink("Créer un ticket", "Add", "Ticket", new { }, new { @class = "btn btn-primary pull-right" })
         </ul>
         
         <div class=content>
             <div class="row-fluid">
                 <div class="span8">
-                    <form>
+                    
                     @RenderBody()
-                    </form>
+                    
                 </div>
                 <div class="span4">
-                <form class="bs-docs-example">
-                <legend>ToolBox</legend>
+               
                     <div>@RenderSection("navBar",false)</div>
-                </form>
+                
                 </div>
             </div>
             </div>

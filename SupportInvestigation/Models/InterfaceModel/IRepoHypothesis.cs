@@ -22,8 +22,12 @@ namespace SupportInvestigation.Models.InterfaceModel
 
         void Update(Hypothesis investigation);
 
+        void UpdateHypothesysSolved(int id);
+
         //Delete
         void Delete(Hypothesis investigation);
+
+        void DeleteHypoBelongToTicket(int id);
 
         //Get
 

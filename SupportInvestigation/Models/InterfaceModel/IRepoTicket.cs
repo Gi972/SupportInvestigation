@@ -25,6 +25,7 @@ namespace SupportInvestigation.Models.InterfaceModel
 
         void Update(Ticket ticket);
         void UpdateTicketSolved(int id);
+        void UpdateIcketRead(int id);
 
         //Delete
         void Delete(Ticket ticket);

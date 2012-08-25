@@ -1,82 +1,62 @@
 ﻿@model SupportInvestigation.Models.Model.Hypothesis
-
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Proposer une solution";
 }
-
-<h2>Create</h2>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@section navBar{
+<form>
+<fieldset>
+<legend>@Html.ActionLink("Retourner sur la liste", "List", "Ticket", new { }, new { @class = "btn btn-large btn-block btn-inverse" })</legend>
+</fieldset>
+</form>
+}
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Hypothesis</legend>
-
+        <legend>Votre solution</legend>
         <div class="editor-label">
-            @Html.LabelFor(model => model.title)
+          Titre
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.title)
             @Html.ValidationMessageFor(model => model.title)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DateCreation)
-        </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DateCreation)
+            @Html.HiddenFor(model => model.DateCreation)
             @Html.ValidationMessageFor(model => model.DateCreation)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DateModification)
-        </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DateModification)
+            @Html.HiddenFor(model => model.DateModification)
             @Html.ValidationMessageFor(model => model.DateModification)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StateSolved)
-        </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.StateSolved)
+            @Html.HiddenFor(model => model.StateSolved)
             @Html.ValidationMessageFor(model => model.StateSolved)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Contents)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Contents)
+            @Html.TextAreaFor(model => model.Contents, new { @class = "field span12", @rows = "20" })
             @Html.ValidationMessageFor(model => model.Contents)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IDTicket)
-        </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.IDTicket)
+            @Html.HiddenFor(model => model.IDTicket)
             @Html.ValidationMessageFor(model => model.IDTicket)
         </div>
-
-        
-          <div class="editor-label">
-            @Html.LabelFor(model => model.IDUser)
-        </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.IDUser)
+            @Html.HiddenFor(model => model.IDUser)
             @Html.ValidationMessageFor(model => model.IDUser)
         </div>
-
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Proposer" name="Name" class="btn" />
         </p>
     </fieldset>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

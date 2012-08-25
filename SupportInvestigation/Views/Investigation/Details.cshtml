@@ -4,59 +4,64 @@
     ViewBag.Title = "Details";
 }
 @section navBar{
-
-<h5></h5>
-        <br />
-        <button class="btn btn-large btn-block" type="button">  @Html.ActionLink("Edit", "Edit", new { id = Model.Ticket.TicketID }) </button>
-        <button class="btn btn-large btn-block" type="button">@Html.ActionLink("Effacer", "Delete")</button>
-        <button class="btn btn-large btn-block" type="button">@Html.ActionLink("Archiver", "Solved")</button>
-        <br />
-        <br />
-
-        <button class="btn btn-large btn-block" type="button"> @Html.ActionLink("Retourner à la liste", "Index")</button>
-        <br />
-        <br />
-        <br />
-<p>Date de création: @Html.DisplayFor(model => model.Ticket.DateCreation)</p>
-<p>derniere modification:  @Html.DisplayFor(model => model.Ticket.DateModification)</p>
+    <h5>
+    </h5>
+    <br />
+    @Html.ActionLink("Editer votre hypothèse", "Edit", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-info" })
+    @Html.ActionLink("Effacer", "Delete", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-warning" })    
+    @Html.ActionLink("Proposer une solution", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <button class="btn btn-large btn-block" type="button">
+        @Html.ActionLink("Retourner à la liste", "List","Ticket")</button>
+    <br />
+    <br />
+    <br />
+   
 }
 
-<h2>@Html.DisplayFor(model => model.Ticket.Title)</h2>
+<h3>Le ticket à résoudre</h3>
 
 <fieldset>
-    <legend>@Html.DisplayFor(model => model.Ticket.Summary)</legend>   
- <div class="BodyContent">
+    <legend><small>@Html.DisplayFor(model => model.Ticket.Title)</small></legend>   
+ <div class="BodyContent well">
+ 
    <p>@Html.DisplayFor(model => model.Ticket.Contents)</p>
-
+  
 </div>
+<div class="pull-left">@Model.Ticket.DateCreation.ToShortDateString()</div>
     <div class="pull-right"><strong>Auteur : </strong><em>@Html.DisplayFor(model => model.Ticket.Users.Login)</em></div>
 </fieldset>
 
 
-<h2>Votre investigation</h2>
+<h3>Votre solution</h3>
 
 <fieldset>
     <legend>@Html.DisplayFor(model => model.hypothese.title)</legend>   
- <div class="BodyContent">
+ <div class="BodyContent well">
    <p>@Html.DisplayFor(model => model.hypothese.Contents)</p>
 
 </div>
+<div class="pull-left">@Model.hypothese.DateCreation.ToShortDateString()</div>
     <div class="pull-right"><strong>Auteur : </strong><em>@Html.DisplayFor(model => model.hypothese.Users.Login)</em></div>
 </fieldset>
 
 
 <br />
-<h2>Autres investigations</h2>
+
+<h2 class="pagination-centered">Autres Solutions</h2>
 
 @foreach (var item in Model.Investigation)
 {
      <form>
+     <fieldset >
      <legend>@item.title</legend>
-     <div class="BodyHypoContent">
+     <div class="BodyHypoContent well">
      <p>@item.Contents</p>
      </div>
+     </fieldset>
     </form>
     <hr />
+    <div class="pull-left">Crée le : @item.DateCreation.ToShortDateString()</div>
 <div class="pull-right"><strong>Auteur : </strong><em>@item.Users.Login</em></div>
     
     <br />   
@@ -64,4 +69,4 @@
 }
 
 
-@Html.ActionLink("Ajouter une autre hypothese", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class="myclass"})
+@Html.ActionLink("Proposer une solution", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })

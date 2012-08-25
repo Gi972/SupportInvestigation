@@ -54,16 +54,8 @@ namespace SupportInvestigation.Controllers
         public ActionResult Details(int id)
         {
             Ticket ticket = MsiRepoTicket.GetTicket(id);
-           
-           // Hypothesis invest = MsiRepoHypo.GetInvestigation(id);
-           
             List<Hypothesis> list = MsiRepoHypo.GestInvestigationByTicket(id);
-            
-            //if (invest == null)
-            //{
-            //    ticket = MsiRepoTicket.GetTicket(invest.IDTicket);    
-            //}
-            
+            MsiRepoTicket.UpdateIcketRead(id);
             TicketDetailViewModel detailDuticket = new TicketDetailViewModel(ticket, list);
 
             if (ticket == null)
@@ -204,6 +196,7 @@ namespace SupportInvestigation.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+            MsiRepoHypo.DeleteHypoBelongToTicket(id);
             MsiRepoTicket.Delete(MsiRepoTicket.GetTicket(id));
             MsiRepoTicket.Save();
             return View("DeleteTicketSuccess");
@@ -213,8 +206,9 @@ namespace SupportInvestigation.Controllers
         //Changer l'état d'un ticket en résolu
         public ActionResult Solved(int id)
         {
+            MsiRepoHypo.UpdateHypothesysSolved(id);
             MsiRepoTicket.UpdateTicketSolved(id);
-            return View("Success");
+            return View("ArchivedSuccess");
         }
 
 

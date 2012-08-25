@@ -24,10 +24,27 @@ namespace SupportInvestigation.Models.Repository
             MsiRepo.Hypothesis.Attach(investigation);
             MsiRepo.ObjectStateManager.ChangeObjectState(investigation, EntityState.Modified);
         }
+        
+        public void UpdateHypothesysSolved(int id)
+        {
+           var list=  MsiRepo.Hypothesis.Where(d => d.IDTicket == id).ToList();
+           foreach (var item in list)
+           {
+               item.StateSolved = 1;
+           }
+           MsiRepo.SaveChanges();
+        }
 
         public void Delete(Hypothesis investigation)
         {
             MsiRepo.Hypothesis.DeleteObject(investigation);
+        }
+
+
+        public void DeleteHypoBelongToTicket(int id)
+        {
+            MsiRepo.Hypothesis.Where(d => d.IDTicket == id).ToList().ForEach(MsiRepo.Hypothesis.DeleteObject);
+            MsiRepo.SaveChanges();
         }
 
         public Hypothesis GetInvestigation(int id)
@@ -96,6 +113,6 @@ namespace SupportInvestigation.Models.Repository
         public void Save()
         {
             MsiRepo.SaveChanges();
-        }
+        }        
     }
 }
