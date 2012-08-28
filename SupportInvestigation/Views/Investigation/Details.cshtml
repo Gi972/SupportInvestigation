@@ -7,7 +7,7 @@
     <h5>
     </h5>
     <br />
-    @Html.ActionLink("Editer votre hypothèse", "Edit", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-info" })
+    @Html.ActionLink("Modifier votre solution", "Edit", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-info" })
     @Html.ActionLink("Effacer", "Delete", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-warning" })    
     @Html.ActionLink("Proposer une solution", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -48,7 +48,7 @@
 
 <br />
 
-<h2 class="pagination-centered">Autres Solutions</h2>
+<h2 class="pagination-centered">Historique des Solutions</h2>
 
 @foreach (var item in Model.Investigation)
 {

@@ -1,59 +1,65 @@
 ﻿@model SupportInvestigation.Models.CustomView.TicketsAddViewModel
-
 @{
     ViewBag.Title = "Création d'un ticket";
 }
-
-<h2>Création d'un ticket</h2>
-
-@Html.ValidationMessage("choiceError", new { @class = "alert"})
+<h2>
+    Création d'un ticket</h2>
+@Html.ValidationMessage("choiceError", new { @class = "alert" })
 <br />
-
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
-@using (Html.BeginForm()) {
+
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Ajout d'un marchand</legend>
-      
-      @Html.DropDownList("marchandID")
+    
+   
+    @Html.DropDownMarchand();
+   
 
-        <div class="editor-label">
-            Le nom de la société
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.Name, new { @class = "field span12", @rows="1", @maxlength="45"})
-            @Html.ValidationMessage("nameError", new { @style="color:red"  })
-        </div>
-       
-        <div class="editor-label">
-            l'url de la société (www.societeMarchande.com)
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.Url, new { @class = "field span12", @rows = "1", @maxlength = "20" })
-            @Html.ValidationMessage("urlError", new { @style = "color:red" })
-        </div>    
-        <div class="editor-label">
-            Le nom de la personne à contacter dans la société
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.Contact, new { @class = "field span12", @rows = "1", @maxlength = "45" })
-            @Html.ValidationMessage("contactError", new { @style = "color:red" })
-        </div>
-         <div class="editor-label">
-            Le numéro de la société 
-        </div>
-        <div class="editor-field">
-           <label for="Telephone"></label>
-           @Html.TextAreaFor(model => model.Telephone, new { @class = "field span12", @rows = "1", @maxlength = "10" })
-             @Html.ValidationMessage("phoneError", new { @style = "color:red" })
-        </div>
+      @Html.DropDownList("marchandID", (IEnumerable<SelectListItem>)ViewBag.PriorityID, new { @class = "btn dropdown-toggle" }) 
 
-        </fieldset>
+        ou 
+        <button type="button" class="btn btn-danger " data-toggle="collapse" data-target="#demo">Ajouter un marchand</button>
+
+        <div  id="demo" class="collapse">
+            <div class="editor-label">
+                Le nom de la société
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Name, new { @class = "field span12", @rows = "1", @maxlength = "45" })
+                @Html.ValidationMessage("nameError", new { @style = "color:red" })
+            </div>
+            <div class="editor-label">
+                l'url de la société (www.societeMarchande.com)
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Url, new { @class = "field span12", @rows = "1", @maxlength = "20" })
+                @Html.ValidationMessage("urlError", new { @style = "color:red" })
+            </div>
+            <div class="editor-label">
+                Le nom de la personne à contacter dans la société
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Contact, new { @class = "field span12", @rows = "1", @maxlength = "45" })
+                @Html.ValidationMessage("contactError", new { @style = "color:red" })
+            </div>
+            <div class="editor-label">
+                Le numéro de la société
+            </div>
+            <div class="editor-field">
+                <label for="Telephone">
+                </label>
+                @Html.TextAreaFor(model => model.Telephone, new { @class = "field span12", @rows = "1", @maxlength = "10" })
+                @Html.ValidationMessage("phoneError", new { @style = "color:red" })
+            </div>
+        </div>
+    </fieldset>
     <fieldset>
-
-    <legend>Création du ticket</legend>
+        <legend>Création du ticket</legend>
         <div class="editor-label">
             Titre
         </div>
@@ -61,7 +67,6 @@
             @Html.TextAreaFor(model => model.Title, new { @class = "field span12", @rows = "1", @maxlength = "20" })
             @Html.ValidationMessageFor(model => model.Title)
         </div>
-
         <div class="editor-label">
             Résumé (Max : 45 caractères)
         </div>
@@ -69,21 +74,18 @@
             @Html.TextAreaFor(model => model.Summary, new { @class = "field span12", @rows = "1", @maxlength = "45" })
             @Html.ValidationMessageFor(model => model.Summary)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Description)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Description, new {@class = "field span12", @rows="20"})
+            @Html.TextAreaFor(model => model.Description, new { @class = "field span12", @rows = "20" })
             @Html.ValidationMessageFor(model => model.Description)
         </div>
-
         <p>
             <input type="submit" value="Create" name="Name" class="btn" />
         </p>
     </fieldset>
 }
-
 <div>
-     @Html.ActionLink("Retour à la liste", "List")
+    @Html.ActionLink("Retour à la liste", "List")
 </div>

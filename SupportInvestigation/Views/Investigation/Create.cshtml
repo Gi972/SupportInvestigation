@@ -8,10 +8,11 @@
 @section navBar{
 <form>
 <fieldset>
-<legend>@Html.ActionLink("Retourner sur la liste", "List", "Ticket", new { }, new { @class = "btn btn-large btn-block btn-inverse" })</legend>
+<legend>@Html.ActionLink("Retourner sur la liste", "ListHypo", "Investigation", new { }, new { @class = "btn btn-large btn-block btn-inverse" })</legend>
 </fieldset>
 </form>
 }
+
 
 @using (Html.BeginForm())
 {
@@ -57,6 +58,3 @@
         </p>
     </fieldset>
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

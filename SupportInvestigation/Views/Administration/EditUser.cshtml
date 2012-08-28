@@ -4,6 +4,15 @@
     ViewBag.Title = "Edit";
 }
 
+@section navBar{
+<form>
+<fieldset>
+<legend>Trier par:</legend>
+@Html.ActionLink("Reinitialiser le password", "ReinitiatePassword", new { }, new { @class = "btn btn-large btn-block btn-danger" })
+</fieldset>
+</form>
+
+}
 <h2>Edit</h2>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
@@ -24,11 +33,9 @@
             @Html.ValidationMessageFor(model => model.Login)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
+       
         <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
+            @Html.HiddenFor(model => model.Password)
             @Html.ValidationMessageFor(model => model.Password)
         </div>
 
@@ -43,10 +50,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Level)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Level)
-            @Html.ValidationMessageFor(model => model.Level)
-        </div>
+       @Html.DropDownLevelAdminFor(model => model.Level)
 
         <p>
             <input type="submit" value="Save" />

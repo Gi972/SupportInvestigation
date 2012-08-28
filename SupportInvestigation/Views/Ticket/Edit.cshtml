@@ -37,11 +37,10 @@
             @Html.HiddenFor(model => model.DateModification)
         </div>
         Choisir un autre marchand
-        <div class="editor-field">
-            @Html.HiddenFor(model => model.IDMarchand)
-            @Html.DisplayFor(model => model.Marchands.Url)
-            @Html.ValidationMessageFor(model => model.IDMarchand)
-        </div>
+
+        @Html.DropDownMarchandFor(model => model.IDMarchand)
+
+       
         <hr />
         <div class="editor-label">
            Résumé <em>(Max : 45 caractères)</em>

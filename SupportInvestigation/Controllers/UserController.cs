@@ -7,6 +7,9 @@ using System.Web.Security;
 using SupportInvestigation.Models.InterfaceModel;
 using SupportInvestigation.Models.Repository;
 using SupportInvestigation.Models.Administration;
+using SupportInvestigation.Models.Model;
+using SupportInvestigation.Helpers;
+using System.Security.Cryptography;
 
 namespace SupportInvestigation.Controllers
 {
@@ -15,8 +18,9 @@ namespace SupportInvestigation.Controllers
        //
         // GET: /Profile/
         IRepoUser MsiRepoUser;
-        int levelAdmin = 0;
-        int levelUser = 1;
+       // int levelAdmin = 0;
+       // int levelUser = 1;
+        string roleUser = "";
         
         public UserController() : this(new RepoUser()) { }
 
@@ -34,20 +38,67 @@ namespace SupportInvestigation.Controllers
         public ActionResult LogOn(AccountUser model)
         {           
             if (ModelState.IsValid)
-            {                
-                if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, levelAdmin))
-                {
-                    FormsAuthentication.SetAuthCookie(model.Login, false);
-                                                 
-                    return RedirectToAction("Home","Administration");
-                }
-                else if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, levelUser))
-                {
-                    FormsAuthentication.SetAuthCookie(model.Login, false);
+            {
 
-                    return RedirectToAction("List", "Ticket");
-                }         
+                
+                // Initialize FormsAuthentification for web.config
+                FormsAuthentication.Initialize();
+
+               // Hash du mot de passe
+                 MD5 md5Hash = MD5.Create();
+
+                string hashPass = MD5Hash.GetMd5Hash(md5Hash, model.Password);
+
+                MD5Hash.VerifyMd5Hash(md5Hash, model.Password, hashPass);
+                
+                User logUser = MsiRepoUser.GetLoginAndPass(model.Login, hashPass);
+
+                if (logUser != null)
+                {
+                    if (logUser.Level == 0)
+                    {
+                        roleUser = "Admins";
+                    }
+                    else
+                    {
+                        roleUser = "Users";
+                    }
+
+                   
+
+                    //Create a new ticket used for authentification
+                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+                        1, //Ticket version
+                        model.Login, //Username associed with ticket
+                        DateTime.Now, //Date/time issued
+                        DateTime.Now.AddMinutes(30), //DateTime to expire
+                        true,//Persistent cookie
+                        roleUser,//role
+                        FormsAuthentication.FormsCookiePath);
+
+
+                    //Encrypt the Cookie using the machine key for secure transport
+                    string hash = FormsAuthentication.Encrypt(ticket);
+                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
+
+                    if (ticket.IsPersistent) cookie.Expires = ticket.Expiration;
+
+                    //Add the cookie to the list for outgoing response
+                    Response.Cookies.Add(cookie);
+
+                    //Redirect to requested URL, or Homepage if no previous page requested
+                    string returnUrl = Request.QueryString[""];
+                    if (returnUrl == null) returnUrl = "/Ticket/list";
+
+                    Response.Redirect(returnUrl);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Mot de passe ou login invalide");
+                }
+
             }
+           
             return View();
         }
 

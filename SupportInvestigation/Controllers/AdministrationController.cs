@@ -8,6 +8,9 @@ using SupportInvestigation.Models.InterfaceModel;
 using SupportInvestigation.Models.Repository;
 using System.Web.Security;
 using SupportInvestigation.Models.Model;
+using System.Security.Cryptography;
+using System.Text;
+using SupportInvestigation.Helpers;
 
 namespace SupportInvestigation.Controllers
 {
@@ -34,37 +37,40 @@ namespace SupportInvestigation.Controllers
         //
         // GET: /Administration/connect
 
-        public ActionResult Connect()
-        {
-            return View();
-        }
 
-        [HttpPost]
-        public ActionResult Connect(AccountUser model)
-        {
-            if (ModelState.IsValid)
-            {
+        // TODO A VERIFIER A EFFACER!
+
+        //public ActionResult Connect()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public ActionResult Connect(AccountUser model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
                 
-                if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, model.Level ))
-                {
+        //        if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, model.Level ))
+        //        {
                    
-                    FormsAuthentication.SetAuthCookie(model.Login, false);
+        //            FormsAuthentication.SetAuthCookie(model.Login, false);
                 
-                    return RedirectToAction("Home");
-                }
-                else if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, model.Level))
-                {
-                    FormsAuthentication.SetAuthCookie(model.Login, false);
+        //            return RedirectToAction("Home");
+        //        }
+        //        else if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, model.Level))
+        //        {
+        //            FormsAuthentication.SetAuthCookie(model.Login, false);
 
-                    return RedirectToAction("Home", "User");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "mot de passe ou login invalide");
-                }
-            }
-            return View();
-        }
+        //            return RedirectToAction("Home", "User");
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("", "mot de passe ou login invalide");
+        //        }
+        //    }
+        //    return View();
+        //}
 
 
         public ActionResult Home()
@@ -93,20 +99,28 @@ namespace SupportInvestigation.Controllers
         [HttpPost]
         public ActionResult CreateUser(User user)
         {
-            if (ModelState.IsValid)
+            if (user.Level == -1)
             {
-                User mTest = MsiRepoUser.GetUser(user.Login);
-
+                ModelState.AddModelError("errorRole", "Veuillez choisir un role si'l vous plait");
+                return View();
+            }
+           
+            if (ModelState.IsValid)
+            {                     
+                User mTest = MsiRepoUser.GetUserByMail(user.Mail);
+            
                 if (mTest != null)
-                {
-                    if (user.Login == mTest.Login || user.Mail == mTest.Mail)
+                {                  
+                    if (user.Mail == mTest.Mail)
                     {
-                        ModelState.AddModelError("errorModel", "Cet utilisateur existe déja");
+                        ModelState.AddModelError("errorModel", "Un utilisateur utilisant cette adresse email existe déja");
                         return View();
                     }
                 }
                 try
                 {
+                    MD5 md5Hash = MD5.Create();
+                    user.Password = MD5Hash.GetMd5Hash(md5Hash, user.Password);                   
                     MsiRepoUser.Add(user);
                     MsiRepoUser.Save();
                     return View("CreateUserSuccess");
@@ -150,14 +164,11 @@ namespace SupportInvestigation.Controllers
             return RedirectToAction("EditUser", new { id = idUser });
         }
 
-
-
         public ActionResult EditUser(int id)
         {
             User user = MsiRepoUser.GetUser(id);
             return View(user);
         }
-
 
         [HttpPost]
         public ActionResult EditUser(User user)
@@ -240,6 +251,19 @@ namespace SupportInvestigation.Controllers
         }
 
 
+        public ActionResult ReinitiatePassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult ReinitiatePassword(User user)
+        {
+            MD5 md5Hash = MD5.Create();   
+            MD5Hash.GetMd5Hash(md5Hash, user.Password);
+            return View();
+        }
         //-------------------------------------------------------------------------------------------//
         //-----------------------------------  Creation Marchands ---------------------------------------//
         //-------------------------------------------------------------------------------------------//
@@ -275,6 +299,7 @@ namespace SupportInvestigation.Controllers
 
                 try
                 {
+                   
                     MsiRepoMarchand.Add(marchand);
                     MsiRepoMarchand.Save();
                     return View("CreateMarchandSuccess");
@@ -405,5 +430,6 @@ namespace SupportInvestigation.Controllers
 
 
         }
+
     }
 }

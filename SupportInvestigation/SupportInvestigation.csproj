@@ -64,6 +64,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="backup\UserController.cs.back" />
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestigationController.cs" />
@@ -72,7 +73,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CustomHelper.cs" />
+    <Compile Include="Helpers\MD5Hash.cs" />
     <Compile Include="Models\Administration\AccountUser.cs" />
+    <Compile Include="Models\CustomView\AdministrationCreateUserViewModel.cs" />
     <Compile Include="Models\CustomView\HomeIndexViewModel.cs" />
     <Compile Include="Models\CustomView\InvestigationDetailViewModel.cs" />
     <Compile Include="Models\CustomView\TicketDetailViewModel.cs" />
@@ -96,6 +100,7 @@
     <Compile Include="Models\Model\Ticket.cs" />
     <Compile Include="Models\Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Views\Administration\ReinitiatePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SIDatabase.mdf" />
@@ -110,6 +115,7 @@
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap\js\jquery-1.8.0.min.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />

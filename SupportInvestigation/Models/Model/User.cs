@@ -7,5 +7,7 @@ namespace SupportInvestigation.Models.Model
 {
     public partial class User
     {
+
+        
     }
 }

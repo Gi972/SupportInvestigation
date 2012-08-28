@@ -14,15 +14,17 @@ namespace SupportInvestigation.Models.InterfaceModel
         //-------------------------------------------------------------------------------------------//
 
 
-
+        User GetLoginAndPass(string login, string mdp);
         /// <summary>
         /// Retourne true si le login mot de passe est valide et détermine le niveau de l'utilisateur
         /// </summary>
         /// <param name="login"></param>
         /// <param name="mdp"></param>
         /// <param name="level"></param>
-        /// <returns></returns>
+        /// <returns></returns>  
         bool GetLoginAndPass(string login, string mdp, int level);
+        bool GetLoginAndPass(string login, string mdp, string role);
+      
 
         /// <summary>
         /// Détermine le niveau de l'utilisateur à partir de son login.
@@ -56,6 +58,7 @@ namespace SupportInvestigation.Models.InterfaceModel
         List<User> GetLastUser();
         User GetUser(int id);
         User GetUser(string login);
+        User GetUserByMail(string mail);
 
         void Save();
 

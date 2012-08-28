@@ -6,7 +6,7 @@
     <h5>
     </h5>
     <br />
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Ticket.TicketID }, new { @class = "btn btn-large btn-block btn-info" })
+    @Html.ActionLink("Modifier votre ticket", "Edit", new { id = Model.Ticket.TicketID }, new { @class = "btn btn-large btn-block btn-info" })
     @Html.ActionLink("Archiver", "Solved", new { id = Model.Ticket.TicketID }, new { @class = "btn btn-large btn-block btn-success" })
     @Html.ActionLink("Proposer une solution", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })
     <br /><br /><br />

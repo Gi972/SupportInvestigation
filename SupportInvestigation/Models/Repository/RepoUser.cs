@@ -28,6 +28,25 @@ namespace SupportInvestigation.Models.Repository
             return true;
         }
 
+
+        public bool GetLoginAndPass(string login, string mdp, string role)
+        {
+            //TODO ne pas oublier d'implementer aprés avoir créer ton modul d'indentification
+            return true;
+        }
+
+
+        public User GetLoginAndPass(string login, string mdp)
+        {
+            var findUser = MsiRepo.Users.SingleOrDefault(d => d.Login == login && d.Password == mdp);
+            if (findUser == null)
+            {
+                return null;
+            }
+            return findUser;
+        }
+
+
         public bool GetLevelAdmin(string login)
         {
             var findUser = MsiRepo.Users.SingleOrDefault(d => d.Login == login);
@@ -85,6 +104,10 @@ namespace SupportInvestigation.Models.Repository
             return MsiRepo.Users.SingleOrDefault(d => d.Login == login);
         }
 
+        public User GetUserByMail(string mail)
+        {
+            return MsiRepo.Users.SingleOrDefault(d => d.Mail == mail);
+        }
 
         public void Save()
         {
