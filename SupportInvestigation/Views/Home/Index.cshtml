@@ -4,10 +4,10 @@
     ViewBag.Title = "Page d'accueil";
 }
 
-<h2>HelloWorld</h2>
-
-@Html.ActionLink("Se connecter", "Connect","Administration")
-@Html.ActionLink("Afficher la liste des tickets ", "ListTicket","Ticket")
-@Html.ActionLink("Afficher la liste des users", "ListUser","Administration")
-@Html.ActionLink("Afficher la liste des marchands", "ListMarchand","ticket")
-@Html.ActionLink("Afficher la liste des hypotheses", "ListHypo","Investigation")
+<div class="hero-unit">
+  <h1>Machand Support Investigation</h1>
+  <p>Bienvenue sur le logiciel de suivi investigation pour le support technique</p>
+  <p>
+    @Html.ActionLink("Entrer", "List", "Ticket", new { }, new { @class = "btn btn-primary btn-large" })
+  </p>
+</div>

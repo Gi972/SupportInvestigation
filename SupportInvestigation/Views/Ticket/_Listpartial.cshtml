@@ -1,0 +1,63 @@
+﻿@model PagedList.IPagedList<SupportInvestigation.Models.Model.Ticket>
+<form>
+<div id="refTable">
+    <fieldset>
+        <legend>Derniers Tickets</legend>
+        <table class="table">
+            <tr>
+                <th>
+                    <i class="icon-check"></i>
+                </th>
+                <th>
+                    Titre
+                </th>
+                <th>
+                    <i class="icon-calendar"></i> Date
+                </th>
+                <th>
+                    Résumé
+                </th>
+                <th>
+                   <i class="icon-globe"></i>  Url
+                </th>
+                <th>
+                 <i class="icon-user"></i>
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.stateRead == 0)
+                        {
+                            <i class="icon-envelope"></i>
+                        }
+                        else
+                        {
+                            <i class=" icon-ok"></i>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @item.DateCreation.ToShortDateString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Summary)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Marchands.Url)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Users.Login)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Lire", "Details", new { id = item.TicketID }, new { @class = "btn btn-small" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </fieldset>
+</div>
+</form>

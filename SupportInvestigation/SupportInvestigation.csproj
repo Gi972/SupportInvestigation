@@ -37,6 +37,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.15.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -64,8 +67,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="backup\List.cshtml" />
+    <Content Include="backup\Add.cshtml" />
     <None Include="backup\UserController.cs.back" />
     <Compile Include="Controllers\AdministrationController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestigationController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
@@ -76,11 +82,15 @@
     <Compile Include="Helpers\CustomHelper.cs" />
     <Compile Include="Helpers\MD5Hash.cs" />
     <Compile Include="Models\Administration\AccountUser.cs" />
+    <Compile Include="Models\CustomView\AdministrationCreateMarchandViewModel.cs" />
     <Compile Include="Models\CustomView\AdministrationCreateUserViewModel.cs" />
+    <Compile Include="Models\CustomView\BaseViewPage.cs" />
     <Compile Include="Models\CustomView\HomeIndexViewModel.cs" />
     <Compile Include="Models\CustomView\InvestigationDetailViewModel.cs" />
+    <Compile Include="Models\CustomView\PasswordViewModel.cs" />
     <Compile Include="Models\CustomView\TicketDetailViewModel.cs" />
     <Compile Include="Models\CustomView\TicketsAddViewModel.cs" />
+    <Compile Include="Models\InterfaceModel\ICustomPrincipal.cs" />
     <Compile Include="Models\InterfaceModel\IRepoGenerique.cs" />
     <Compile Include="Models\Model\Hypothesis.cs" />
     <Compile Include="Models\Model\Marchand.cs" />
@@ -88,6 +98,8 @@
     <Compile Include="Models\InterfaceModel\IRepoMarchand.cs" />
     <Compile Include="Models\InterfaceModel\IRepoTicket.cs" />
     <Compile Include="Models\InterfaceModel\IRepoUser.cs" />
+    <Compile Include="Models\Model\SerializeModel.cs" />
+    <Compile Include="Models\Repository\CustomPrincipal.cs" />
     <Compile Include="Models\Repository\RepoHypothesis.cs" />
     <Compile Include="Models\Repository\RepoMarchand.cs" />
     <Compile Include="Models\Repository\RepoTicket.cs" />
@@ -100,7 +112,16 @@
     <Compile Include="Models\Model\Ticket.cs" />
     <Compile Include="Models\Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\bootstrap\editor\bootstrap-wysihtml5.css" />
+    <Content Include="Content\bootstrap\editor\bootstrap-wysihtml5.js" />
+    <Content Include="Content\bootstrap\editor\wysihtml5-0.3.0.js" />
+    <Content Include="Content\bootstrap\editor\wysihtml5-0.3.0_rc2.min.js" />
+    <Content Include="Content\bootstrap\js\jquery-1.7.2.min.js" />
     <Content Include="Views\Administration\ReinitiatePassword.cshtml" />
+    <Content Include="Views\User\Home.cshtml" />
+    <Content Include="Views\Ticket\_Listpartial.cshtml" />
+    <Content Include="Views\Ticket\List.cshtml" />
+    <Content Include="backup\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SIDatabase.mdf" />
@@ -155,7 +176,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -250,9 +273,6 @@
     <Content Include="Views\Administration\DeleteMarchandSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Ticket\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Ticket\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -315,6 +335,7 @@
   <ItemGroup>
     <Content Include="Views\Investigation\Edit.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

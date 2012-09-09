@@ -10,10 +10,11 @@ using SupportInvestigation.Models.Administration;
 using SupportInvestigation.Models.Model;
 using SupportInvestigation.Helpers;
 using System.Security.Cryptography;
+using System.Web.Script.Serialization;
 
 namespace SupportInvestigation.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController 
     {
        //
         // GET: /Profile/
@@ -21,6 +22,8 @@ namespace SupportInvestigation.Controllers
        // int levelAdmin = 0;
        // int levelUser = 1;
         string roleUser = "";
+
+        public string CookieName { get; set; }
         
         public UserController() : this(new RepoUser()) { }
 
@@ -39,7 +42,7 @@ namespace SupportInvestigation.Controllers
         {           
             if (ModelState.IsValid)
             {
-
+                
                 
                 // Initialize FormsAuthentification for web.config
                 FormsAuthentication.Initialize();
@@ -64,7 +67,22 @@ namespace SupportInvestigation.Controllers
                         roleUser = "Users";
                     }
 
-                   
+                    
+                    HttpCookie cookieId = new HttpCookie("Mycookie");
+                    cookieId["UserId"] = logUser.UserID.ToString();
+
+
+
+                    SerializeModel serializeModel = new SerializeModel();
+                    serializeModel.UserId = logUser.UserID;
+                    serializeModel.Mail = logUser.Mail;
+                    serializeModel.LastName = logUser.Login;
+                    serializeModel.Role = roleUser;
+
+
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                    string userData = serializer.Serialize(serializeModel);
 
                     //Create a new ticket used for authentification
                     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
@@ -73,7 +91,7 @@ namespace SupportInvestigation.Controllers
                         DateTime.Now, //Date/time issued
                         DateTime.Now.AddMinutes(30), //DateTime to expire
                         true,//Persistent cookie
-                        roleUser,//role
+                        userData,//roleUser,//role
                         FormsAuthentication.FormsCookiePath);
 
 
@@ -103,19 +121,23 @@ namespace SupportInvestigation.Controllers
         }
 
         public ActionResult Home()
-        {         
+        {
+
             return View();
         }
 
         //Déconnecte un utilisateur
         public ActionResult LogOff()
         {
+            
             FormsAuthentication.SignOut();
 
             return RedirectToAction("Index", "Home");
         }
 
         
+        
+
     }
 
     

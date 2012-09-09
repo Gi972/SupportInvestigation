@@ -49,11 +49,11 @@
         </div>
 
         <p>
-            <input type="submit" value="Save" />
+            <button type="submit" class="btn">Sauvegarder</button>
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { }, new {@class="btn" })
 </div>

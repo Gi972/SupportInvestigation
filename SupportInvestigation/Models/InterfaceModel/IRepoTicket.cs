@@ -39,7 +39,7 @@ namespace SupportInvestigation.Models.InterfaceModel
         /// Retourne la liste des tickets dont l'état est défini à non résolu. 
         /// </summary>
         /// <returns></returns>
-        List<Ticket> GetTicketNoSolved();
+        IQueryable<Ticket> GetTicketNoSolved();
 
         /// <summary>
         /// Retourne la liste des tickets dont l'état est défini à résolu.

@@ -6,11 +6,14 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Security.Principal;
+using System.Web.Script.Serialization;
+using SupportInvestigation.Models.Model;
+using SupportInvestigation.Models.Repository;
 
 namespace SupportInvestigation
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
+    // visit http://go.microsoft.com/?LinkId=9394801@
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -42,23 +45,62 @@ namespace SupportInvestigation
         protected void Application_AuthenticateRequest(Object sender,
 EventArgs e)
         {
-            if (HttpContext.Current.User != null)
-            {
-                if (HttpContext.Current.User.Identity.IsAuthenticated)
-                {
-                    if (HttpContext.Current.User.Identity is FormsIdentity)
-                    {
-                        FormsIdentity id =
-                            (FormsIdentity)HttpContext.Current.User.Identity;
-                        FormsAuthenticationTicket ticket = id.Ticket;
+            //if (HttpContext.Current.User != null)
+            //{
+            //    if (HttpContext.Current.User.Identity.IsAuthenticated)
+            //    {
+            //        if (HttpContext.Current.User.Identity is FormsIdentity)
+            //        {
+            //            FormsIdentity id =
+            //                (FormsIdentity)HttpContext.Current.User.Identity;
+            //            FormsAuthenticationTicket ticket = id.Ticket;
 
-                        // Get the stored user-data, in this case, our roles
-                        string userData = ticket.UserData;
-                        string[] roles = userData.Split(',');
-                        HttpContext.Current.User = new GenericPrincipal(id, roles);
-                    }
-                }
+            //            // Get the stored user-data, in this case, our roles
+            //            string userData = ticket.UserData;
+            //            string[] roles = userData.Split(',');
+            //            HttpContext.Current.User = new GenericPrincipal(id, roles);
+            //        }
+            //    }
+            //}
+
+
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie != null)
+            {
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                SerializeModel serializeModel = serializer.Deserialize<SerializeModel>(authTicket.UserData);
+
+                 FormsIdentity id =
+                            (FormsIdentity)HttpContext.Current.User.Identity;
+                 FormsAuthenticationTicket ticket = id.Ticket;
+
+                 // Get the stored user-data, in this case, our roles
+                 string userData = ticket.UserData;
+                 string[] roles = userData.Split(',');
+
+                CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
+                newUser.UserId = serializeModel.UserId;
+                newUser.Mail = serializeModel.Mail;
+                newUser.LastName = serializeModel.LastName;
+                newUser.Role = serializeModel.Role;
+
+
+                HttpContext.Current.User = newUser;
+
+
             }
+            else
+            {
+                
+                HttpContext.Current.User = new CustomPrincipal("");
+            }
+         
+
+
         }
 
 

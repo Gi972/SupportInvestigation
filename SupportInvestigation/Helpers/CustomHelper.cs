@@ -8,12 +8,26 @@ using SupportInvestigation.Models.CustomView;
 using SupportInvestigation.Models.InterfaceModel;
 using SupportInvestigation.Models.Repository;
 using System.Linq.Expressions;
+using SupportInvestigation.Models.Model;
 
 namespace SupportInvestigation.Helpers
 {
     public static class CustomHelper
     {
-       
+        public static MvcHtmlString DropDownUser(this HtmlHelper html)
+        {
+            IRepoUser MsiRepoUser = new RepoUser();
+            List<User> users = new List<User>();
+            users = MsiRepoUser.GetAllUser().ToList();
+            var userbox = new List<SelectListItem>();
+            userbox.Add(new SelectListItem { Value = "-1", Text = "Please choose" });
+            foreach (var item in users)
+            {
+                userbox.Add(new SelectListItem { Value = item.UserID.ToString(), Text = item.Login });
+            };
+            return html.DropDownList("UserID", userbox);
+           
+        }
 
 
         public static List<SelectListItem> DDPmarchandBox(this HtmlHelper helper)
@@ -160,6 +174,17 @@ namespace SupportInvestigation.Helpers
             {"GU"," Guam"}
         };
             return html.DropDownListFor(expression, new SelectList(stateList, "key", "value"));
+        }
+
+
+        public static int LoginUserID(this HtmlHelper html ) {
+
+            IRepoUser user = new RepoUser();
+
+
+
+
+            return 1;
         }
     }
 }

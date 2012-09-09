@@ -1,12 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@inherits SupportInvestigation.Models.CustomView.BaseViewPage
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/bootstrap/css/bootstrap.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Content/bootstrap/js/jquery-1.8.0.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
-     <script src="@Url.Content("~/Content/bootstrap/js/bootstrap.js")"></script>
+    <link href="@Url.Content("~/Content/bootstrap/editor/bootstrap-wysihtml5.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/bootstrap/editor/wysihtml5-0.3.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/bootstrap/js/jquery-1.8.0.min.js")" type="text/javascript"></script> 
+    <script src="@Url.Content("~/Content/bootstrap/js/bootstrap.min.js")"></script>
+     <script src="@Url.Content("~/Content/bootstrap/editor/bootstrap-wysihtml5.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+   
+   
+    
+
     <style type="text/css">
     .content
     {
@@ -29,8 +37,20 @@
                 <div class="container">
                     <a class="brand" href="#">Marchand Support investigation</a>
                     <ul class="nav">
-                       <li><a href="/Home/Index"><i class="icon-home"></i> Accueil</a></li>
-                        <li><a href="/Administration/Home"><i class="icon-user"></i> Administration</a></li>
+                       <li><a href="@Url.Action("List","Ticket")"><i class="icon-home"></i> Accueil</a></li>
+                                          
+                        @if(User.IsInRole("Admins"))
+                        {
+                           <li><a href="@Url.Action("Home","Administration")"><i class="icon-wrench"></i>  Administration</a></li>
+                        }
+                        else
+                        {
+                        <li><a href="@Url.Action("Home","User")"><i class="icon-map-marker"></i> Mon Espace</a></li>
+                        }
+
+                       
+        
+                       
                     </ul>
                     <ul class="nav pull-right">
                         @Html.Partial("_LogOnPartial")
@@ -69,8 +89,8 @@
     <br />
     <hr />
     <footer>
-        <p class="pull-right">
-            &copy; Jc Demar Project - 2012</p>
+        <p style="text-align:center">
+            &copy; Un projet de <a href="mailto:jeanchristophedemar@yahoo.fr?Subject=Msi%Contact">Jc Demar</a>- 2012</p>
     </footer>
    
 </body>

@@ -52,7 +52,7 @@
             Formulaire
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Contents, new {@class = "field span12", @rows="20"})
+            @Html.TextAreaFor(model => model.Contents, new { @class = "field span12 textarea", @rows = "20" })
             @Html.ValidationMessageFor(model => model.Contents)
         </div>
          <div class="pull-left">
@@ -69,3 +69,10 @@
         <input type="submit" value="Sauvegarder" class="btn btn-large" />
     </fieldset>
 }
+
+
+<script>
+    $('.textarea').wysihtml5({
+    "image": false
+    });
+</script>

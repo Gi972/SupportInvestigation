@@ -7,9 +7,12 @@ using SupportInvestigation.Models.InterfaceModel;
 using SupportInvestigation.Models.Repository;
 using SupportInvestigation.Models.Model;
 using SupportInvestigation.Models.CustomView;
+using System.Collections;
+using PagedList;
 
 namespace SupportInvestigation.Controllers
 {
+   // [OutputCache(Duration=30)] //Mise en cache 30 secondes
     public class TicketController : Controller
     {
 
@@ -38,15 +41,72 @@ namespace SupportInvestigation.Controllers
         }
 
 
-        public ActionResult List()
-        {
-            var ModelGetAll = MsiRepoTicket.GetTicketNoSolved();
 
-            ViewData["UserAuth"] = MsiRepoUser.GetIdByLogin(User.Identity.Name);
 
-            return View(ModelGetAll.ToList());
+
+        public ViewResult List(string sortOrder, string searchString, int? page) {
+
+            ViewBag.MarchandSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
+            ViewBag.AuteurSortParm = sortOrder == "Auteur" ? "Auteur desc" : "Auteur";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
+            ViewBag.TitleSortParm = sortOrder == "Title" ? "Title desc" : "Title";
+            ViewBag.readSortParm = sortOrder == "Read" ? "Read desc" : "Read";
+
+         
+
+
+            var ticket = MsiRepoTicket.GetTicketNoSolved();
+
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    var marchandSort = marchand.Where(m => m.Name.ToUpper().Contains(searchString.ToUpper()));
+            //}
+
+        
+
+            switch (sortOrder)
+            {
+                case "Name desc":
+                    ticket = ticket.OrderByDescending(m => m.Marchands.Url);
+                    break;
+                case "Name":
+                    ticket = ticket.OrderBy(m => m.Marchands.Url);
+                    break;
+                case "Auteur desc":
+                    ticket = ticket.OrderByDescending(m => m.Users.Login);
+                      break;
+                case "Auteur":
+                      ticket = ticket.OrderBy(m => m.Users.Login);
+                      break;
+                case "Date desc":
+                    ticket = ticket.OrderByDescending(m => m.DateCreation);
+                    break;
+                case "Title desc":
+                    ticket = ticket.OrderByDescending(m => m.Title);
+                    break;
+                case "Title":
+                    ticket = ticket.OrderBy(m => m.Title);
+                    break;
+                case "Read desc":
+                    ticket = ticket.OrderByDescending(m => m.stateRead);
+                    break;
+                case "Read":
+                    ticket = ticket.OrderBy(m => m.stateRead);
+                    break;
+                default:
+                    ticket = ticket.OrderByDescending(m => m.DateCreation);
+                    break;
+
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View(ticket.ToPagedList(pageNumber, pageSize));
+
+
         }
-
+        
 
 
         //Voir en détail un ticket
@@ -79,6 +139,7 @@ namespace SupportInvestigation.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Add(TicketsAddViewModel customModel)
         {
 
@@ -173,6 +234,7 @@ namespace SupportInvestigation.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(Ticket ticket)
         {
 
@@ -228,11 +290,46 @@ namespace SupportInvestigation.Controllers
         }
 
             //Archives//
-            
-        public ActionResult Archived()
+
+        public ActionResult Archived(string sortOrder, string searchString, int? page)
         {
-            List<Ticket> ticket = MsiRepoTicket.GetTicketSolved().ToList();
-            return View(ticket);
+
+            ViewBag.MarchandSortParm = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            ViewBag.AuteurSortParm = sortOrder == "Auteur" ? "Auteur desc" : "Auteur";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
+
+
+            var archive = MsiRepoTicket.GetTicketSolved();
+
+            var archiveSort = archive.OrderBy(m => m.Marchands.Name);
+            switch (sortOrder)
+            {
+                //case "Name desc":
+                //    hypoSort = hypo.OrderByDescending(m => m.IDTicket);
+                //    break;
+                case "Name":
+                    archiveSort = archive.OrderBy(m => m.Marchands.Url);
+                    break;
+                case "Auteur desc":
+                    archiveSort = archive.OrderByDescending(m => m.IDUser);
+                    break;
+                case "Auteur":
+                    archiveSort = archive.OrderBy(m => m.IDUser);
+                    break;
+                case "Date desc":
+                    archiveSort = archive.OrderByDescending(m => m.DateCreation);
+                    break;
+
+                default:
+                    archiveSort = archive.OrderByDescending(i => i.Marchands.Url);
+                    break;
+
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            //List<Ticket> ticket = MsiRepoTicket.GetTicketSolved().ToList();
+            return View(archiveSort.ToPagedList(pageNumber,pageSize));
         }
 
 

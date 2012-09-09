@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Bienvenue sur votre espace utilisateur</h2>
+
+@{
+
+@Html.ActionLink("Modifier votre profile", "EditUser", "Administration", new { id = User.UserId }, new { });
+
+    }

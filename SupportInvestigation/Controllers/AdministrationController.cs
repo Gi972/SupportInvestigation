@@ -11,6 +11,7 @@ using SupportInvestigation.Models.Model;
 using System.Security.Cryptography;
 using System.Text;
 using SupportInvestigation.Helpers;
+using SupportInvestigation.Models.CustomView;
 
 namespace SupportInvestigation.Controllers
 {
@@ -142,15 +143,15 @@ namespace SupportInvestigation.Controllers
 
         public ActionResult ChoiceUser()
         {
-            List<User> users = new List<User>();
-            users = MsiRepoUser.GetAllUser().ToList();
-            var userbox = new List<SelectListItem>();
-            userbox.Add(new SelectListItem { Value = "0", Text = "Please choose" });
-            foreach (var item in users)
-            {
-                userbox.Add(new SelectListItem { Value = item.UserID.ToString(), Text = item.Login });
-            };
-            ViewData["UserID"] = userbox;
+            //List<User> users = new List<User>();
+            //users = MsiRepoUser.GetAllUser().ToList();
+            //var userbox = new List<SelectListItem>();
+            //userbox.Add(new SelectListItem { Value = "0", Text = "Please choose" });
+            //foreach (var item in users)
+            //{
+            //    userbox.Add(new SelectListItem { Value = item.UserID.ToString(), Text = item.Login });
+            //};
+            //ViewData["UserID"] = userbox;
 
             return View();
         }
@@ -160,6 +161,12 @@ namespace SupportInvestigation.Controllers
         [HttpPost]
         public ActionResult ChoiceUser(User user)
         {
+            if (user.UserID == -1)
+            {
+                ModelState.AddModelError("ErrorChoice", "Vous devez choisir un utilisateur");
+                return View();
+            }
+            
             int idUser = user.UserID;
             return RedirectToAction("EditUser", new { id = idUser });
         }
@@ -251,18 +258,31 @@ namespace SupportInvestigation.Controllers
         }
 
 
-        public ActionResult ReinitiatePassword()
+        public ActionResult ReinitiatePassword(User user)
         {
-            return View();
+            PasswordViewModel pass = new PasswordViewModel();
+            pass.UserID = user.UserID;
+            pass.Login = user.Login;
+
+            return View(pass);
         }
 
 
         [HttpPost]
-        public ActionResult ReinitiatePassword(User user)
+        public ActionResult ReinitiatePassword(PasswordViewModel user)
         {
+
+            if (user.Password != user.PasswordConfirmed || user.Password == string.Empty)
+            {
+                ModelState.AddModelError("ErrorPassword", "Le mot de passe n'est pas le même");
+                    return View(user);
+            }
+
             MD5 md5Hash = MD5.Create();   
-            MD5Hash.GetMd5Hash(md5Hash, user.Password);
-            return View();
+           string hashPass =  MD5Hash.GetMd5Hash(md5Hash, user.Password);
+           MsiRepoUser.updatePassword(user.UserID, hashPass);
+          // User updateUser = MsiRepoUser.GetUser(user.UserID);
+           return RedirectToAction("EditUser", new {id = user.UserID});
         }
         //-------------------------------------------------------------------------------------------//
         //-----------------------------------  Creation Marchands ---------------------------------------//

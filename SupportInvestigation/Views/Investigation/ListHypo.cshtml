@@ -1,69 +1,105 @@
-﻿@model IEnumerable<SupportInvestigation.Models.Model.Hypothesis>
-<script type="text/javascript"> $("li.lien2").addClass(" active")</script>
-
+﻿@model PagedList.IPagedList<SupportInvestigation.Models.Model.Hypothesis>
+<script type="text/javascript">    $("li.lien2").addClass(" active")</script>
 @{
     ViewBag.Title = "ListHypo";
 }
-
 @section navBar{
-<form>
-<legend>Trier par:</legend>
-<button class="btn btn-large btn-block btn-info" type="button">Marchand</button>
-<button class="btn btn-large btn-block btn-info" type="button">Auteur</button>
-<button class="btn btn-large btn-block btn-info" type="button">Date</button>
-</form>
-
+    <form>
+    <fieldset>
+        <legend>Trier par:</legend>
+        @Html.ActionLink("Par ticket", "ListHypo", new { sortOrder = ViewBag.MarchandSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+        @Html.ActionLink("Auteur", "ListHypo", new { sortOrder = ViewBag.AuteurSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+        @Html.ActionLink("Date", "ListHypo", new { sortOrder = ViewBag.DateSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+    </fieldset>
+    <hr />
+    <fieldset>
+        <legend>Navigation</legend>
+        <div style="text-align: center">
+            @if (Model.HasPreviousPage)
+            {          
+                <a href="@Url.Action("ListHypo", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">
+                    <i class="icon-fast-backward"></i></a>
+                @Html.Raw(" ");
+        
+                <a href="@Url.Action("ListHypo", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">
+                    <i class="icon-backward"></i>Precedent</a>                      
+            }
+            else
+            {
+                @:<i class=" icon-ban-circle"></i>
+        @Html.Raw(" ");
+                @:<i class=" icon-chevron-left"></i> Precedent
+                }
+            @if (Model.HasNextPage)
+            {
+                <a href="@Url.Action("ListHypo", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">
+                    Suivant <i class="icon-forward"></i></a>             
+                @Html.Raw(" ");
+                      
+                <a href="@Url.Action("ListHypo", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">
+                    <i class="icon-fast-forward"></i></a>                          
+            }
+            else
+            {
+                @:Suivant <i class="icon-chevron-right"></i>
+        @Html.Raw(" ")
+                @:<i class="icon-ban-circle"></i>
+                }
+            <br />
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            sur @Model.PageCount
+        </div>
+    </fieldset>
+    </form>
 }
-
-<legend>Dernières investigations</legend>
-<table class="table">
-    <tr>
-        <th>
-            iD
-        </th>
-        <th>
-            titre
-        </th>
-        <th>
-            Date
-        </th>  
-        <th>
-            Ticket
-        </th>
-          <th>
-            iDTicket
-        </th>
-         
-        <th>
-            Auteur
-        </th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.hypothesisID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @item.DateCreation.ToShortDateString()
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tickets.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IDTicket)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Users.Login)
-        </td>
-        <td>
-        @Html.ActionLink("Lire", "Details", new { id = item.hypothesisID }, new { @class="btn btn-small"})
-        </td>
-    </tr>
-}
-
-</table>
-
+<fieldset>
+    <legend>Dernières investigations</legend>
+    <table class="table">
+        <tr>
+            <th>
+                iD
+            </th>
+            <th>
+                <i class="icon-calendar"></i>Date
+            </th>
+            <th>
+                N°
+            </th>
+            <th>
+                Nom du ticket
+            </th>
+            <th>
+                <i class="icon-file"></i>Solution
+            </th>
+            <th>
+               <i class="icon-user"></i>
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hypothesisID)
+                </td>
+                <td>
+                    @item.DateCreation.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDTicket)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tickets.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Users.Login)
+                </td>
+                <td>
+                    @Html.ActionLink("Lire", "Details", new { id = item.hypothesisID }, new { @class = "btn btn-small" })
+                </td>
+            </tr>
+        }
+    </table>
+</fieldset>

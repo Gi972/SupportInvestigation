@@ -8,12 +8,12 @@
 <form>
 <fieldset>
 <legend>Trier par:</legend>
-@Html.ActionLink("Reinitialiser le password", "ReinitiatePassword", new { }, new { @class = "btn btn-large btn-block btn-danger" })
+@Html.ActionLink("Reinitialiser le password", "ReinitiatePassword", new {UserID = Model.UserID}, new { @class = "btn btn-large btn-block btn-danger" })
 </fieldset>
 </form>
 
 }
-<h2>Edit</h2>
+<h2>Modification du profil</h2>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
@@ -21,7 +21,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>User</legend>
+        <legend>Votre profil</legend>
 
         @Html.HiddenFor(model => model.UserID)
 
@@ -46,18 +46,21 @@
             @Html.EditorFor(model => model.Mail)
             @Html.ValidationMessageFor(model => model.Mail)
         </div>
-
+        @if (User.Role == "Admins")
+        {
+            
+      
         <div class="editor-label">
             @Html.LabelFor(model => model.Level)
         </div>
        @Html.DropDownLevelAdminFor(model => model.Level)
-
+         }
         <p>
-            <input type="submit" value="Save" />
+            <button type="submit" class="btn">Sauvegarder les modification </button>
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour", "Home")
 </div>

@@ -1,10 +1,8 @@
-﻿@model SupportInvestigation.Models.Model.Marchand
+﻿@model SupportInvestigation.Models.CustomView.AdministrationCreateMarchandViewModel
 
 @{
     ViewBag.Title = "CreateMarchand";
 }
-
-<h2>CreateMarchand</h2>
 
 @Html.ValidationMessage("errorModel")
 
@@ -14,10 +12,10 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Marchand</legend>
+        <legend>Création d'un marchand</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            Nom du marchand
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
@@ -25,7 +23,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Url)
+           Url du marchand
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Url)
@@ -33,7 +31,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ContactName)
+            Nom du contact
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.ContactName)
@@ -41,7 +39,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Phone)
+          Numéro de téléphone
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Phone)
@@ -49,11 +47,11 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <button type="submit" class="btn">Creer le marchand</button>
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Home")
+    @Html.ActionLink("Retour", "Home", new { }, new {@class="btn" })
 </div>

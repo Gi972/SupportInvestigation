@@ -1,5 +1,4 @@
 ﻿@model SupportInvestigation.Models.CustomView.InvestigationDetailViewModel
-
 @{
     ViewBag.Title = "Details";
 }
@@ -7,66 +6,84 @@
     <h5>
     </h5>
     <br />
-    @Html.ActionLink("Modifier votre solution", "Edit", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-info" })
-    @Html.ActionLink("Effacer", "Delete", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-warning" })    
+    @if (User.Mail == Model.hypothese.Users.Mail)
+    {
+        @Html.ActionLink("Modifier votre solution", "Edit", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-info" })
+        @Html.ActionLink("Effacer", "Delete", new { id = Model.hypothese.hypothesisID }, new { @class = "btn btn-large btn-block btn-warning" })    
+    }
+    else
+    {<button class="btn btn-large btn-block btn-info disabled">Modifier votre solution</button>
+      <button class="btn btn-large btn-block btn-warning disabled">Effacer</button>
+    }
     @Html.ActionLink("Proposer une solution", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <button class="btn btn-large btn-block" type="button">
-        @Html.ActionLink("Retourner à la liste", "List","Ticket")</button>
+        @Html.ActionLink("Retourner à la liste", "ListHypo", "Investigation")</button>
     <br />
     <br />
     <br />
-   
 }
-
-<h3>Le ticket à résoudre</h3>
-
+<h3>
+    Le ticket à résoudre</h3>
 <fieldset>
-    <legend><small>@Html.DisplayFor(model => model.Ticket.Title)</small></legend>   
- <div class="BodyContent well">
- 
-   <p>@Html.DisplayFor(model => model.Ticket.Contents)</p>
-  
-</div>
-<div class="pull-left">@Model.Ticket.DateCreation.ToShortDateString()</div>
-    <div class="pull-right"><strong>Auteur : </strong><em>@Html.DisplayFor(model => model.Ticket.Users.Login)</em></div>
+    <legend><small>@Html.DisplayFor(model => model.Ticket.Title)</small></legend>
+    @Html.TextAreaFor(model => model.Ticket.Contents, new { @class = "field span12 textarea", @rows = "20" })
+    <div class="pull-left">@Model.Ticket.DateCreation.ToShortDateString()</div>
+    <div class="pull-right">
+        <strong>Auteur : </strong><em>@Html.DisplayFor(model => model.Ticket.Users.Login)</em></div>
 </fieldset>
-
-
-<h3>Votre solution</h3>
-
+<h3>
+    Votre solution</h3>
 <fieldset>
-    <legend>@Html.DisplayFor(model => model.hypothese.title)</legend>   
- <div class="BodyContent well">
-   <p>@Html.DisplayFor(model => model.hypothese.Contents)</p>
-
-</div>
-<div class="pull-left">@Model.hypothese.DateCreation.ToShortDateString()</div>
-    <div class="pull-right"><strong>Auteur : </strong><em>@Html.DisplayFor(model => model.hypothese.Users.Login)</em></div>
+    <legend>@Html.DisplayFor(model => model.hypothese.title)</legend>
+    @Html.TextAreaFor(model => model.hypothese.Contents, new { @class = "field span12 textarea", @rows = "20" })
+    <div class="pull-left">@Model.hypothese.DateCreation.ToShortDateString()</div>
+    <div class="pull-right">
+        <strong>Auteur : </strong><em>@Html.DisplayFor(model => model.hypothese.Users.Login)</em></div>
 </fieldset>
-
-
 <br />
-
-<h2 class="pagination-centered">Historique des Solutions</h2>
-
+<h2 class="pagination-centered">
+    Historique des Solutions</h2>
 @foreach (var item in Model.Investigation)
 {
-     <form>
-     <fieldset >
-     <legend>@item.title</legend>
-     <div class="BodyHypoContent well">
-     <p>@item.Contents</p>
-     </div>
-     </fieldset>
+    <form>
+    <fieldset>
+        <legend>@item.title</legend>
+        <textarea class="field span12 textarea" rows="20">@item.Contents</textarea>
+    </fieldset>
     </form>
     <hr />
-    <div class="pull-left">Crée le : @item.DateCreation.ToShortDateString()</div>
-<div class="pull-right"><strong>Auteur : </strong><em>@item.Users.Login</em></div>
+    <div class="pull-left">
+        Crée le : @item.DateCreation.ToShortDateString()</div>
+    <div class="pull-right">
+        <strong>Auteur : </strong><em>@item.Users.Login</em></div>
     
     <br />   
     <br />
 }
-
-
 @Html.ActionLink("Proposer une solution", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })
+<script>
+    $('.textarea').wysihtml5(
+
+    { "font-styles": false,
+        "emphasis": false,
+        "lists": false,
+        "html": false,
+        "link": false,
+        "image": false,
+        "color": false
+    }
+    );
+</script>

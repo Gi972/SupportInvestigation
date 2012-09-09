@@ -1,77 +1,58 @@
-﻿@model IEnumerable<SupportInvestigation.Models.Model.Ticket>
-<script type="text/javascript">$("li.lien1").addClass(" active")</script>
+﻿@model PagedList.IPagedList<SupportInvestigation.Models.Model.Ticket>
+<script type="text/javascript">    $("li.lien1").addClass(" active")</script>
 @{
     ViewBag.Title = "Derniers tickets";
 }
 @section navBar{
-<form>
-<legend>Trier par:</legend>
-<button class="btn btn-large btn-block btn-info" type="button">Marchand</button>
-<button class="btn btn-large btn-block btn-info" type="button">Auteur</button>
-<button class="btn btn-large btn-block btn-info" type="button">Date</button>
-</form>
-
-}
-<form>
-<legend>Dernier Tickets</legend>
-<table class="table">
-    <tr>
-        <th>
-            Lu
-        </th>
-        <th>
-            Titre
-        </th>
-        <th>
-            Date
-        </th>
-        <th>
-            Résumé
-        </th>
-        <th>
-           Url
-        </th>
-        <th>
-            Auteur
-        </th>
-
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-
-            @if (item.stateRead == 0)
-            {
-            <i class="icon-envelope"></i>
+    <form>
+    <fieldset>
+        <legend>Trier par:</legend>
+        <div id="refLien">
+            @Html.ActionLink("Marchand", "List", new { sortOrder = ViewBag.MarchandSortParm, post = 1 }, new { @class = "btn btn-large btn-block btn-info" })
+            @Html.ActionLink("Auteur", "List", new { sortOrder = ViewBag.AuteurSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+            @Html.ActionLink("Date", "List", new { sortOrder = ViewBag.DateSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+            @Html.ActionLink("Title", "List", new { sortOrder = ViewBag.TitleSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+            @Html.ActionLink("Ticket lu / non lu", "List", new { sortOrder = ViewBag.ReadSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+        </div>
+    </fieldset>
+    <hr />
+    <fieldset>
+        <legend style="text-align:center">Navigation</legend>
+        <div style="text-align: center">
+            @if (Model.HasPreviousPage)
+            {     
+                <a href="@Url.Action("List", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">
+                    <i class="icon-fast-backward"></i></a>
+                @Html.Raw(" ");
+        
+                <a href="@Url.Action("List", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">
+                    <i class="icon-backward"></i>Precedent</a>             
             }
             else
             {
-            <i class=" icon-ok"></i>
+                @:<i class=" icon-ban-circle"></i>
+        @Html.Raw(" ");
+                @:<i class=" icon-chevron-left"></i> Precedent
+                }
+            @if (Model.HasNextPage)
+            {
+                <a href="@Url.Action("List", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">
+                    Suivant <i class="icon-forward"></i></a>     
+                @Html.Raw(" ");
+                <a href="@Url.Action("List", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">
+                    <i class="icon-fast-forward"></i></a>
             }
-                
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-               @item.DateCreation.ToShortDateString()
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Summary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Marchands.Url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Users.Login)
-            </td>
-            <td >
-                @Html.ActionLink("Lire", "Details", new { id = item.TicketID }, new { @class = "btn btn-small" }) 
-              
-            </td>
-        </tr>
-    }
-</table>
-
-</form>
+            else
+            {
+                @:Suivant <i class="icon-chevron-right"></i>
+        @Html.Raw(" ")
+                @:<i class="icon-ban-circle"></i>
+                }
+            <br />
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            sur @Model.PageCount
+        </div>
+    </fieldset>
+    </form>
+}
+@Html.Partial("_Listpartial", Model)

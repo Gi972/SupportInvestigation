@@ -39,6 +39,7 @@ namespace SupportInvestigation.Models.InterfaceModel
         /// <param name="name"></param>
         /// <returns></returns>
         int GetIdByLogin(string login);
+        void updatePassword(int id, string password);
 
         //-------------------------------------------------------------------------------------------//
         //----------------------------------------REQUETES USERS-------------------------------------//

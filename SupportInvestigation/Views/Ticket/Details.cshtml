@@ -6,31 +6,60 @@
     <h5>
     </h5>
     <br />
+    @if (User.Mail == Model.Ticket.Users.Mail)
+    {  
     @Html.ActionLink("Modifier votre ticket", "Edit", new { id = Model.Ticket.TicketID }, new { @class = "btn btn-large btn-block btn-info" })
     @Html.ActionLink("Archiver", "Solved", new { id = Model.Ticket.TicketID }, new { @class = "btn btn-large btn-block btn-success" })
     @Html.ActionLink("Proposer une solution", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })
-    <br /><br /><br />
-    @Html.ActionLink("Effacer", "Delete", new { id = Model.Ticket.TicketID }, new { @class = "btn btn-large btn-block btn-warning" })
+    }
+    else{
     
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <button class = "btn btn-large btn-block btn-info disabled"> Modifier votre ticket</button>
+         <button class = "btn btn-large btn-block btn-success disabled"> Archiver</button>
+
+    @Html.ActionLink("Proposer une solution", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })      
+    }
+
+    <br />
+    <br />
+    <br />
+    @if (User.Mail == Model.Ticket.Users.Mail)
+    {
+         @Html.ActionLink("Effacer", "Delete", new { id = Model.Ticket.TicketID }, new { @class = "btn btn-large btn-block btn-warning" })
+    }
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <button class="btn btn-large btn-block" type="button">
-        @Html.ActionLink("Retourner à la liste", "List","Ticket")</button>
+        @Html.ActionLink("Retourner à la liste", "List", "Ticket")</button>
     <br />
     <br />
     <br />
-   
 }
 <h4>@Html.DisplayFor(model => model.Ticket.Title)</h4>
 <fieldset>
-    <legend><small>Site marchand : @Html.DisplayFor(model => model.Ticket.Marchands.Url) <span class="pull-right"><strong>Crée le : </strong><em>@Model.Ticket.DateCreation.ToShortDateString() </em></span></small></legend>
+    <legend><small><i class="icon-globe"></i> Site marchand : @Html.DisplayFor(model => model.Ticket.Marchands.Url)
+        <span class="pull-right"><strong><i class="icon-calendar"></i>Crée le : </strong><em>@Model.Ticket.DateCreation.ToShortDateString()
+        </em></span></small></legend>
     <div class="BodyContent">
-        <textarea rows="20" class="field span12" disabled="disabled">@Html.DisplayFor(model => model.Ticket.Contents)</textarea>
+        <textarea rows="20" class="field span12 textarea" disabled="disabled">@Html.DisplayFor(model => model.Ticket.Contents)</textarea>
     </div>
     <div class="pull-left">
-     <i class="icon-hand-right"></i> Contacter: @Html.DisplayFor(model => model.Ticket.Marchands.ContactName) | télephone: @Html.DisplayFor(model => model.Ticket.Marchands.Phone)
+        <i class="icon-hand-right"></i> Contacter: @Html.DisplayFor(model => model.Ticket.Marchands.ContactName)
+        | Télephone: @Html.DisplayFor(model => model.Ticket.Marchands.Phone)
     </div>
     <div class="pull-right">
-        <strong>Auteur : </strong><em>@Html.DisplayFor(model => model.Ticket.Users.Login)</em></div>
+        <strong><i class="icon-user"></i>Auteur : </strong><em>@Html.DisplayFor(model => model.Ticket.Users.Login)</em></div>
 </fieldset>
 <br />
 <h2 style="text-align: center">
@@ -39,22 +68,34 @@
 {
     <form>
     <fieldset>
-    <legend>@item.title</legend>
-    <div class="BodyHypoContent">
-        <textarea rows="20" class="field span12" disabled="disabled">@item.Contents</textarea>
-    </div>
-    <div class="pull-left">
-        <strong>Crée le : </strong><em>@Model.Ticket.DateCreation.ToShortDateString() </em>
-    </div>   
-    <div class="pull-right">
-        <strong>Auteur : </strong><em>@item.Users.Login</em></div>
-
+        <legend>@item.title</legend>
+        <div class="BodyHypoContent">
+            <textarea rows="20" class="field span12 textarea" disabled="disabled">@item.Contents</textarea>
+        </div>
+        <div class="pull-left">
+            <strong><i class="icon-calendar"></i>Crée le : </strong><em>@Model.Ticket.DateCreation.ToShortDateString()
+            </em>
+        </div>
+        <div class="pull-right">
+            <strong><i class="icon-user"></i>Auteur : </strong><em>@item.Users.Login</em></div>
     </fieldset>
     </form>  
     <br />   
     <br />
     
 }
-
 <br />
 @Html.ActionLink("Proposer une solution ", "Create", "Investigation", new { id = Model.Ticket.TicketID }, new { @class = "myclass btn btn-large btn-block btn-primary" })
+<script>
+    $('.textarea').wysihtml5(
+
+    { "font-styles": false,
+        "emphasis": false,
+        "lists": false,
+        "html": false,
+        "link": false,
+        "image": false,
+        "color": false
+    }
+    );
+</script>

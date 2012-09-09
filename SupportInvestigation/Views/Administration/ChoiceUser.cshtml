@@ -6,10 +6,14 @@
 @using (Html.BeginForm())
 {
 
-@Html.DropDownList("UserID")
+@Html.DropDownUser()
 
+    @Html.ValidationMessage("ErrorChoice", new{ @style = "color:red"  })
+
+        <br />
+        <br />
     <p>
-        <input type="submit" value="Modifier"/>
+        <button type="submit" class="btn"> Modifier l'utilisateur </button>
     </p>
     
 }

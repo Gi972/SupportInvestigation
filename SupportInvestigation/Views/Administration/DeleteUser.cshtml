@@ -4,35 +4,26 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Etes vous sure de vouloir effacer cet utilisateur</h3>
 <fieldset>
-    <legend>User</legend>
+    <legend>Uitilisateur</legend>
 
-    <div class="display-label">Login</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Login)
-    </div>
+    Login: @Html.DisplayFor(model => model.Login)
+    
 
-    <div class="display-label">Password</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Password)
-    </div>
+    
 
-    <div class="display-label">Mail</div>
+    Mail
     <div class="display-field">
         @Html.DisplayFor(model => model.Mail)
     </div>
 
-    <div class="display-label">Level</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Level)
-    </div>
+   <br />
+   <br />
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
-        <input type="submit" value="Supprimer"/> |
-        @Html.ActionLink("Retourner à la page d'accueil", "Home")
+        <button type="submit" value="Supprimer" class="btn">Supprimer cette utilisateur</button> |
+        @Html.ActionLink("Annuler", "Home", new { }, new { @class = "btn"})
     </p>
 }

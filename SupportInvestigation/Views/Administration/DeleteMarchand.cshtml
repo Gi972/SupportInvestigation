@@ -3,36 +3,33 @@
 @{
     ViewBag.Title = "DeleteMarchand";
 }
-
-<h2>DeleteMarchand</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Etes vous sur de vouloir effacer ce marchand?</h3>
 <fieldset>
     <legend>Marchand</legend>
 
-    <div class="display-label">Name</div>
+    <div class="display-label">Nom du marchand</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Name)
     </div>
 
-    <div class="display-label">Url</div>
+    <div class="display-label">Url du marchand</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Url)
     </div>
 
-    <div class="display-label">ContactName</div>
+    <div class="display-label">Contact du marchand</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.ContactName)
     </div>
 
-    <div class="display-label">Phone</div>
+    <div class="display-label">Numéro de téléphone du marchand</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Phone)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        <button type="submit" value="Delete" class="btn">Effacer le marchand</button> |
+        @Html.ActionLink("Retour", "Index", new { }, new { @class="btn"})
     </p>
 }

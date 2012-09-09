@@ -7,6 +7,7 @@ using SupportInvestigation.Models.InterfaceModel;
 using SupportInvestigation.Models.Repository;
 using SupportInvestigation.Models.Model;
 using SupportInvestigation.Models.CustomView;
+using PagedList;
 
 namespace SupportInvestigation.Controllers
 {
@@ -33,11 +34,44 @@ namespace SupportInvestigation.Controllers
 
         //List les investigations en  cours 
 
-        public ActionResult ListHypo()
+        public ViewResult ListHypo(string sortOrder, string searchString, int? page)
         {
-            var investigationInProgress = MsiRepoHypo.GetAllInvestigationInProgress();
+            ViewBag.MarchandSortParm = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            ViewBag.AuteurSortParm = sortOrder == "Auteur" ? "Auteur desc" : "Auteur";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
 
-            return View(investigationInProgress.ToList());
+            var hypo = MsiRepoHypo.GetAllInvestigationInProgress();
+            var hypoSort = hypo.OrderBy(m => m.IDTicket);
+
+            switch (sortOrder)
+            {
+               
+                case "Name":
+                    hypoSort = hypo.OrderBy(m => m.IDTicket);
+                    break;
+                case "Auteur desc":
+                    hypoSort = hypo.OrderByDescending(m => m.IDUser);
+                    break;
+                case "Auteur":
+                    hypoSort = hypo.OrderBy(m => m.IDUser);
+                    break;
+                case "Date desc":
+                    hypoSort = hypo.OrderByDescending(m => m.DateCreation);
+                    break;
+               
+                default:
+                    hypoSort = hypo.OrderByDescending(i => i.IDTicket);
+                    break;
+
+            }
+
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            //var investigationInProgress = MsiRepoHypo.GetAllInvestigationInProgress().OrderByDescending(i => i.IDTicket);
+
+            return View(hypoSort.ToPagedList(pageNumber, pageSize));
         }
 
         //Cree une investigation
@@ -50,6 +84,7 @@ namespace SupportInvestigation.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(Hypothesis investigation)
         {
             if (investigation != null)
@@ -80,6 +115,7 @@ namespace SupportInvestigation.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(Hypothesis investigation)
         {
 

@@ -11,7 +11,7 @@
     {
         @Html.ValidationSummary(true)
         <fieldset>
-            <legend>Creation d'un utilisateur</legend>
+            <legend>Création d'un utilisateur</legend>
             <div class="editor-label">
                 @Html.LabelFor(model => model.Login)
             </div>
@@ -38,10 +38,11 @@
             @Html.ValidationMessageFor(model => model.Level)
             @Html.ValidationMessage("errorRole", new { @style = "color:red" })
 
-            <p>
-                <input type="submit" value="Create" />
-            </p>
-            <div>@Html.ActionLink("Retour au menu", "Index", new { }, new { @class = "btn" })</div>
+            <br />
+            <br />
+            <br />
+              
+            
+            <div><button type="submit" class="btn">Création de l'utilisateur</button> | @Html.ActionLink("Retour au menu", "Index", new { }, new { @class = "btn" })</div>
         </fieldset>
     }
-

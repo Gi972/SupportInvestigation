@@ -1,14 +1,68 @@
-﻿@model IEnumerable<SupportInvestigation.Models.Model.Ticket>
+﻿@model PagedList.IPagedList<SupportInvestigation.Models.Model.Ticket>
 <script type="text/javascript">$("li.lien3").addClass(" active")</script>
 @{
     ViewBag.Title = "Archived";
 }
 @section navBar{
 <form>
+<fieldset>
 <legend>Trier par:</legend>
-<button class="btn btn-large btn-block btn-info" type="button">Marchand</button>
-<button class="btn btn-large btn-block btn-info" type="button">Auteur</button>
-<button class="btn btn-large btn-block btn-info" type="button">Date</button>
+
+@Html.ActionLink("Par ticket", "Archived", new { sortOrder = ViewBag.MarchandSortParm }, new {@class="btn btn-large btn-block btn-info" })
+@Html.ActionLink("Auteur", "Archived", new { sortOrder = ViewBag.AuteurSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+@Html.ActionLink("Date", "Archived", new { sortOrder = ViewBag.DateSortParm }, new { @class = "btn btn-large btn-block btn-info" })
+</fieldset>
+<hr />
+<fieldset>
+ <legend>Navigation</legend>
+ 
+ <div style="text-align: center">
+  
+     
+    @if (Model.HasPreviousPage)
+    {
+   
+      
+       
+        <a href="@Url.Action("Archived", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })"><i class="icon-fast-backward"></i></a>
+        @Html.Raw(" ");
+        
+        <a href="@Url.Action("Archived", new { page = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })"><i class="icon-backward"></i> Precedent</a>            
+       
+      
+    }
+    else
+    {
+        @:<i class=" icon-ban-circle"></i>
+        @Html.Raw(" ");
+        @:<i class=" icon-chevron-left"></i> Precedent
+    }
+     
+    @if (Model.HasNextPage)
+    {
+        <a href="@Url.Action("Archived", new { page = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })">Suivant <i class="icon-forward"></i></a>  
+            
+
+        @Html.Raw(" ");
+                      
+        <a href="@Url.Action("Archived", new { page = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })"><i class="icon-fast-forward"></i></a>
+                      
+       
+    }
+    else
+    {
+        @:Suivant <i class="icon-chevron-right"></i>
+        @Html.Raw(" ")
+        @:<i class="icon-ban-circle"></i>
+    }
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    sur @Model.PageCount
+</div>
+ 
+ </fieldset>
+
+
 </form>
 
 }
@@ -22,17 +76,17 @@
         </th>
         
         <th>
-            Date
+            <i class="icon-calendar"></i> Date
         </th>     
         <th>
             Résumé
         </th>
        
         <th>
-            Url
+           <i class="icon-globe"></i> Url
         </th>
         <th>
-            Auteur
+           <i class="icon-user"></i>
         </th>
      
     </tr>
@@ -44,7 +98,7 @@
         </td>
        
         <td>
-            @Html.DisplayFor(modelItem => item.DateCreation)
+           @item.DateCreation.ToShortDateString()
         </td>
         
         <td>
@@ -58,7 +112,7 @@
             @Html.DisplayFor(modelItem => item.Users.Login)
         </td>
         <td>
-                @Html.ActionLink("Lire", "Details", new { id = item.TicketID }, new { @class="btn btn-small"}) 
+            @Html.ActionLink("Lire", "Details", new { id = item.TicketID }, new { @class="btn btn-small"}) 
         </td>
     </tr>
 }

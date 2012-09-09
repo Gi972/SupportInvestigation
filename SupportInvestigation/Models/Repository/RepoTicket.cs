@@ -64,11 +64,20 @@ namespace SupportInvestigation.Models.Repository
             return MsiRepo.Tickets.ToList();
         }
 
-        public List<Ticket> GetTicketNoSolved()
+        public IQueryable<Ticket> GetTicketNoSolved()
         {
-            return (from ticket in MsiRepo.Tickets
-                    where ticket.StateSolved == 0
-                    select ticket).ToList();
+            try
+            {
+                return (from ticket in MsiRepo.Tickets
+                        where ticket.StateSolved == 0
+                        select ticket);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
         }
 
 

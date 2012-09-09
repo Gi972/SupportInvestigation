@@ -38,12 +38,20 @@ namespace SupportInvestigation.Models.Repository
 
         public User GetLoginAndPass(string login, string mdp)
         {
-            var findUser = MsiRepo.Users.SingleOrDefault(d => d.Login == login && d.Password == mdp);
-            if (findUser == null)
+            try
+            {
+                var findUser = MsiRepo.Users.SingleOrDefault(d => d.Login == login && d.Password == mdp);
+                if (findUser == null)
+                {
+                    return null;
+                }
+                return findUser;
+
+            }
+            catch (Exception)
             {
                 return null;
             }
-            return findUser;
         }
 
 
@@ -62,6 +70,13 @@ namespace SupportInvestigation.Models.Repository
             return MsiRepo.Users.SingleOrDefault(d => d.Login == name).UserID;
         }
 
+
+        public void updatePassword(int id, string password)
+        {
+            var pass = MsiRepo.Users.Single(d => d.UserID == id);
+            pass.Password = password;
+            MsiRepo.SaveChanges();
+        }
         //-------------------------------------------------------------------------------------------//
         //--------------------------------------- USERS REQUEST-------------------------------------//
         //-------------------------------------------------------------------------------------------//
@@ -91,8 +106,8 @@ namespace SupportInvestigation.Models.Repository
         public List<User> GetLastUser()
         {
             return (from dbms in MsiRepo.Users
-                   orderby dbms.UserID descending
-                   select dbms).ToList();
+                    orderby dbms.UserID descending
+                    select dbms).ToList();
         }
         public User GetUser(int id)
         {
@@ -114,5 +129,8 @@ namespace SupportInvestigation.Models.Repository
             MsiRepo.SaveChanges();
         }
 
+
+
+       
     }
 }
