@@ -4,24 +4,21 @@
     ViewBag.Title = "ListMarchand";
 }
 
-<h2>ListMarchand</h2>
+<h2>Liste des Marchands</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+<table class="table">
     <tr>
         <th>
-            Name
+            Nom de la société
         </th>
         <th>
-            Url
+            Url de la société
         </th>
         <th>
-            ContactName
+            Nom du contact
         </th>
         <th>
-            Phone
+            Numéro de téléphone
         </th>
         <th></th>
     </tr>
@@ -41,9 +38,7 @@
             @Html.DisplayFor(modelItem => item.Phone)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MarchandID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MarchandID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MarchandID })
+            @Html.ActionLink("Modifier", "EditMarchand", new { id=item.MarchandID })
         </td>
     </tr>
 }
@@ -51,5 +46,6 @@
 </table>
 
 <br />
+<br />
 
-@Html.ActionLink("Retourner à la page d'adminsitration", "Home")
+@Html.ActionLink("Retourner à la page d'adminsitration", "Home", new { }, new { @class = "btn"})

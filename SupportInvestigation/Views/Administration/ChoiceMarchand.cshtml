@@ -1,12 +1,17 @@
-﻿<div>Quel marchand voulez vous Modifier?</div>
+﻿@model IEnumerable<SupportInvestigation.Models.Model.Marchand>
+<div>Quel marchand voulez vous Modifier?</div>
 
 @using (Html.BeginForm() )
 {
 
-@Html.DropDownList("MarchandID")
+    
+@Html.DropDownMarchand()
 
+     @Html.ValidationMessage("ErrorChoice", new { @style = "color:red" })
+        <br />
+        <br />
     <p>
-        <input type="submit" value="Edit"/>
+        <input type="submit" value="Modifier" class="btn"/>
     </p>
     
 }

@@ -55,12 +55,9 @@
         </div>
        @Html.DropDownLevelAdminFor(model => model.Level)
          }
-        <p>
-            <button type="submit" class="btn">Sauvegarder les modification </button>
-        </p>
+         <hr />
+        <div>
+            <button type="submit" class="btn">Sauvegarder les modification </button> |  @Html.ActionLink("Retour", "Home", new { }, new { @class = "btn" })
+        </div>
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Retour", "Home")
-</div>

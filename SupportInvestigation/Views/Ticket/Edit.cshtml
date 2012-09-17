@@ -9,7 +9,7 @@
     @Html.ActionLink("Edit", "Edit", new { }, new { @class = "btn btn-large btn-block btn-info disabled" })
     @Html.ActionLink("Archiver", "Solved", new { }, new { @class = "btn btn-large btn-block btn-success" })
     <br /><br /><br />
-    @Html.ActionLink("Effacer", "Delete", new { }, new { @class = "btn btn-large btn-block btn-warning" })
+    @Html.ActionLink("Effacer", "Delete", new { id = Model.TicketID}, new { @class = "btn btn-large btn-block btn-warning" })
     
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     <button class="btn btn-large btn-block" type="button">

@@ -4,24 +4,19 @@
     ViewBag.Title = "ListUser";
 }
 
-<h2>ListUser</h2>
+<h2>Utilisateur en base de donnée</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+<table class="table">
     <tr>
         <th>
             Login
         </th>
-        <th>
-            Password
-        </th>
+       
         <th>
             Mail
         </th>
         <th>
-            Level
+            Rôle
         </th>
         <th></th>
     </tr>
@@ -31,23 +26,28 @@
         <td>
             @Html.DisplayFor(modelItem => item.Login)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
+       
         <td>
             @Html.DisplayFor(modelItem => item.Mail)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Level)
+        @if (item.Level == 0)
+        {
+            <span>Administrateur</span>
+        }
+        else
+        {
+            <span>Utilisateur</span>
+        }
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
+            @Html.ActionLink("Modifier l'utilisateur", "EditUser", new { id=item.UserID })
         </td>
+
     </tr>
 }
 
 </table>
-
-@Html.ActionLink("retourner à la page d'administration","Home")
+<br />
+<br />
+@Html.ActionLink("retourner à la page d'administration", "Home", new { }, new { @class = "btn"})

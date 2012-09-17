@@ -341,15 +341,15 @@ namespace SupportInvestigation.Controllers
 
         public ActionResult ChoiceMarchand()
         {
-            List<Marchand> users = new List<Marchand>();
-            users = MsiRepoMarchand.GetAllMarchand().ToList();
-            var userbox = new List<SelectListItem>();
-            userbox.Add(new SelectListItem { Value = "0", Text = "Please choose" });
-            foreach (var item in users)
-            {
-                userbox.Add(new SelectListItem { Value = item.MarchandID.ToString(), Text = item.Url });
-            };
-            ViewData["MarchandID"] = userbox;
+            //List<Marchand> users = new List<Marchand>();
+            //users = MsiRepoMarchand.GetAllMarchand().ToList();
+            //var userbox = new List<SelectListItem>();
+            //userbox.Add(new SelectListItem { Value = "-1", Text = "Please choose" });
+            //foreach (var item in users)
+            //{
+            //    userbox.Add(new SelectListItem { Value = item.MarchandID.ToString(), Text = item.Url });
+            //};
+            //ViewData["MarchandID"] = userbox;
 
             return View();
         }
@@ -357,6 +357,11 @@ namespace SupportInvestigation.Controllers
         [HttpPost]
         public ActionResult ChoiceMarchand(Marchand marchand)
         {
+            if (marchand.MarchandID == -1)
+            {
+                ModelState.AddModelError("ErrorChoice", "Vous devez choisir un marchand");
+                return View();
+            }
             int idMarchand = marchand.MarchandID;
             return RedirectToAction("EditMarchand", new { id = idMarchand });
         }

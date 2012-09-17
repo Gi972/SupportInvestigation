@@ -36,7 +36,7 @@ namespace SupportInvestigation.Helpers
             TicketsAddViewModel ticket = new TicketsAddViewModel();
             ticket.marchands = MsiRepoMarchand.GetAllMarchand();
             var marchanbox = new List<SelectListItem>();
-            marchanbox.Add(new SelectListItem { Value = "0", Text = "Please choose" });
+            marchanbox.Add(new SelectListItem { Value = "-1", Text = "Please choose" });
             foreach (var item in ticket.marchands)
             {
                 marchanbox.Add(new SelectListItem { Value = item.MarchandID.ToString(), Text = item.Url });
@@ -52,13 +52,13 @@ namespace SupportInvestigation.Helpers
             TicketsAddViewModel ticket = new TicketsAddViewModel();
             ticket.marchands = MsiRepoMarchand.GetAllMarchand();
             var marchanbox = new List<SelectListItem>();
-            marchanbox.Add(new SelectListItem { Value = "0", Text = "Please choose" });
+            marchanbox.Add(new SelectListItem { Value = "-1", Text = "Please choose" });
             foreach (var item in ticket.marchands)
             {
                 marchanbox.Add(new SelectListItem { Value = item.MarchandID.ToString(), Text = item.Url });
             };
 
-            return html.DropDownList("Marchand",marchanbox);
+            return html.DropDownList("MarchandID",marchanbox);
             
         }
 
