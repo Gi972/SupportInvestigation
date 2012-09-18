@@ -69,8 +69,6 @@ namespace SupportInvestigation.Controllers
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
-            //var investigationInProgress = MsiRepoHypo.GetAllInvestigationInProgress().OrderByDescending(i => i.IDTicket);
-
             return View(hypoSort.ToPagedList(pageNumber, pageSize));
         }
 
@@ -91,17 +89,9 @@ namespace SupportInvestigation.Controllers
             {
                 investigation.StateSolved = 0;
                 investigation.DateCreation = DateTime.Now;
-                
-
-                
+                                
                 MsiRepoHypo.Add(investigation);
-
-
-
-
                 MsiRepoHypo.Save();
-
-                
 
                 return View("CreateHypoSuccess");
             }
@@ -136,7 +126,6 @@ namespace SupportInvestigation.Controllers
             Ticket ticket = MsiRepoTicket.GetTicketBelongToInvestigation(hypothese.IDTicket);
             List<Hypothesis> list = MsiRepoHypo.GestInvestigationByTicket(ticket.TicketID);
             
-
             InvestigationDetailViewModel detailDuticket = new InvestigationDetailViewModel(hypothese,ticket, list);
 
             if (ticket == null)

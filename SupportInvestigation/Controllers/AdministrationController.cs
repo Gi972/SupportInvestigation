@@ -32,46 +32,7 @@ namespace SupportInvestigation.Controllers
             MsiRepoMarchand = repositoryMarchand;
         }
 
-        //int levelAdmin = 0;
-        // int levelUser = 1;
-
-        //
-        // GET: /Administration/connect
-
-
-        // TODO A VERIFIER A EFFACER!
-
-        //public ActionResult Connect()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult Connect(AccountUser model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-                
-        //        if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, model.Level ))
-        //        {
-                   
-        //            FormsAuthentication.SetAuthCookie(model.Login, false);
-                
-        //            return RedirectToAction("Home");
-        //        }
-        //        else if (MsiRepoUser.GetLoginAndPass(model.Login, model.Password, model.Level))
-        //        {
-        //            FormsAuthentication.SetAuthCookie(model.Login, false);
-
-        //            return RedirectToAction("Home", "User");
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("", "mot de passe ou login invalide");
-        //        }
-        //    }
-        //    return View();
-        //}
+       
 
 
         public ActionResult Home()
@@ -143,16 +104,6 @@ namespace SupportInvestigation.Controllers
 
         public ActionResult ChoiceUser()
         {
-            //List<User> users = new List<User>();
-            //users = MsiRepoUser.GetAllUser().ToList();
-            //var userbox = new List<SelectListItem>();
-            //userbox.Add(new SelectListItem { Value = "0", Text = "Please choose" });
-            //foreach (var item in users)
-            //{
-            //    userbox.Add(new SelectListItem { Value = item.UserID.ToString(), Text = item.Login });
-            //};
-            //ViewData["UserID"] = userbox;
-
             return View();
         }
 
@@ -341,16 +292,6 @@ namespace SupportInvestigation.Controllers
 
         public ActionResult ChoiceMarchand()
         {
-            //List<Marchand> users = new List<Marchand>();
-            //users = MsiRepoMarchand.GetAllMarchand().ToList();
-            //var userbox = new List<SelectListItem>();
-            //userbox.Add(new SelectListItem { Value = "-1", Text = "Please choose" });
-            //foreach (var item in users)
-            //{
-            //    userbox.Add(new SelectListItem { Value = item.MarchandID.ToString(), Text = item.Url });
-            //};
-            //ViewData["MarchandID"] = userbox;
-
             return View();
         }
 
@@ -381,7 +322,7 @@ namespace SupportInvestigation.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                
                 MsiRepoMarchand.Update(marchand);
                 MsiRepoMarchand.Save();
 

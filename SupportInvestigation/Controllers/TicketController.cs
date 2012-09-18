@@ -40,10 +40,6 @@ namespace SupportInvestigation.Controllers
             return View();
         }
 
-
-
-
-
         public ViewResult List(string sortOrder, string searchString, int? page) {
 
             ViewBag.MarchandSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
@@ -51,19 +47,11 @@ namespace SupportInvestigation.Controllers
             ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
             ViewBag.TitleSortParm = sortOrder == "Title" ? "Title desc" : "Title";
             ViewBag.readSortParm = sortOrder == "Read" ? "Read desc" : "Read";
-
-         
-
+       
 
             var ticket = MsiRepoTicket.GetTicketNoSolved();
 
-            //if (!string.IsNullOrEmpty(searchString))
-            //{
-            //    var marchandSort = marchand.Where(m => m.Name.ToUpper().Contains(searchString.ToUpper()));
-            //}
-
         
-
             switch (sortOrder)
             {
                 case "Name desc":
@@ -147,8 +135,6 @@ namespace SupportInvestigation.Controllers
             {
                 if (customModel.MarchandID == 0)
                 {
-
-
 
                     if (customModel.MarchandID == 0 & customModel.Name != null & customModel.Url != null & customModel.Contact != null & customModel.Telephone !=0)
                     {
@@ -304,9 +290,6 @@ namespace SupportInvestigation.Controllers
             var archiveSort = archive.OrderBy(m => m.Marchands.Name);
             switch (sortOrder)
             {
-                //case "Name desc":
-                //    hypoSort = hypo.OrderByDescending(m => m.IDTicket);
-                //    break;
                 case "Name":
                     archiveSort = archive.OrderBy(m => m.Marchands.Url);
                     break;
@@ -328,11 +311,8 @@ namespace SupportInvestigation.Controllers
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            //List<Ticket> ticket = MsiRepoTicket.GetTicketSolved().ToList();
             return View(archiveSort.ToPagedList(pageNumber,pageSize));
         }
-
-
 
     }
 }

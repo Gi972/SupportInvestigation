@@ -42,8 +42,7 @@ namespace SupportInvestigation.Controllers
         {           
             if (ModelState.IsValid)
             {
-                
-                
+                                
                 // Initialize FormsAuthentification for web.config
                 FormsAuthentication.Initialize();
 
@@ -134,10 +133,7 @@ namespace SupportInvestigation.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        
-        
-
+                
     }
 
     

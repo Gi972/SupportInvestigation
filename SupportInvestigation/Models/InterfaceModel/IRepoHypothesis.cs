@@ -55,8 +55,6 @@ namespace SupportInvestigation.Models.InterfaceModel
         /// <returns></returns>
         //List<Hypothesis> GetHomeInvestigation();
 
-
-        ////TODO Vérifier que la requête n'a pas déja été défini avec GetTicketBelongToInvestigation(int id);
         List<Hypothesis> GestInvestigationByTicket(int idTicket);
 
         void Save();

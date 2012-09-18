@@ -31,7 +31,7 @@ namespace SupportInvestigation.Models.Repository
 
         public bool GetLoginAndPass(string login, string mdp, string role)
         {
-            //TODO ne pas oublier d'implementer aprés avoir créer ton modul d'indentification
+            
             return true;
         }
 

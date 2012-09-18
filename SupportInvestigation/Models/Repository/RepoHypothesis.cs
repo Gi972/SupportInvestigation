@@ -52,7 +52,7 @@ namespace SupportInvestigation.Models.Repository
             return MsiRepo.Hypothesis.FirstOrDefault(d => d.hypothesisID == id);
         }
 
-        //TODO revoir l'implementation pour retourner les 5 derniers investigations et non pas tout pareil pour ticket et dans fakeDB aussi
+        
         public IQueryable<Hypothesis> GetLastInvestigation()
         {
             return (from dbms in MsiRepo.Hypothesis
