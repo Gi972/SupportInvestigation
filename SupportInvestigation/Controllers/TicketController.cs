@@ -12,7 +12,7 @@ using PagedList;
 
 namespace SupportInvestigation.Controllers
 {
-   // [OutputCache(Duration=30)] //Mise en cache 30 secondes
+    // [OutputCache(Duration=30)] //Mise en cache 30 secondes
     public class TicketController : Controller
     {
 
@@ -40,18 +40,19 @@ namespace SupportInvestigation.Controllers
             return View();
         }
 
-        public ViewResult List(string sortOrder, string searchString, int? page) {
+        public ViewResult List(string sortOrder, string searchString, int? page)
+        {
 
             ViewBag.MarchandSortParm = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
             ViewBag.AuteurSortParm = sortOrder == "Auteur" ? "Auteur desc" : "Auteur";
             ViewBag.DateSortParm = sortOrder == "Date" ? "Date desc" : "Date";
             ViewBag.TitleSortParm = sortOrder == "Title" ? "Title desc" : "Title";
             ViewBag.readSortParm = sortOrder == "Read" ? "Read desc" : "Read";
-       
+
 
             var ticket = MsiRepoTicket.GetTicketNoSolved();
 
-        
+
             switch (sortOrder)
             {
                 case "Name desc":
@@ -62,10 +63,10 @@ namespace SupportInvestigation.Controllers
                     break;
                 case "Auteur desc":
                     ticket = ticket.OrderByDescending(m => m.Users.Login);
-                      break;
+                    break;
                 case "Auteur":
-                      ticket = ticket.OrderBy(m => m.Users.Login);
-                      break;
+                    ticket = ticket.OrderBy(m => m.Users.Login);
+                    break;
                 case "Date desc":
                     ticket = ticket.OrderByDescending(m => m.DateCreation);
                     break;
@@ -90,11 +91,31 @@ namespace SupportInvestigation.Controllers
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
+            // Section Statistique
+            int nbrNoread = 0;
+            int nbrRead = 0;
+            int nbrSolved = MsiRepoTicket.GetTicketSolved().ToList().Count;
+            foreach (var item in ticket)
+            {
+                if (item.stateRead == 0)
+                {
+                    nbrNoread++;
+                }
+                if (item.stateRead == 1)
+                {
+                    nbrRead++;
+                }
+               
+            }
+            ViewBag.ticketNoRead = nbrNoread;
+            ViewBag.ticketRead = nbrRead;
+            ViewBag.ticketSolved = nbrSolved;
+
             return View(ticket.ToPagedList(pageNumber, pageSize));
 
 
         }
-        
+
 
 
         //Voir en détail un ticket
@@ -136,7 +157,7 @@ namespace SupportInvestigation.Controllers
                 if (customModel.MarchandID == 0)
                 {
 
-                    if (customModel.MarchandID == 0 & customModel.Name != null & customModel.Url != null & customModel.Contact != null & customModel.Telephone !=0)
+                    if (customModel.MarchandID == 0 & customModel.Name != null & customModel.Url != null & customModel.Contact != null & customModel.Telephone != 0)
                     {
                         Marchand marchand = new Marchand()
                         {
@@ -190,6 +211,7 @@ namespace SupportInvestigation.Controllers
                 }
 
 
+                //customModel.ID_User = MsiRepoUser.GetUserByMail((User as CustomPrincipal).Mail).UserID;
                 customModel.ID_User = MsiRepoUser.GetUser(User.Identity.Name).UserID;
                 Ticket ticket = new Ticket()
                 {
@@ -275,7 +297,7 @@ namespace SupportInvestigation.Controllers
             return marchanbox;
         }
 
-            //Archives//
+        //Archives//
 
         public ActionResult Archived(string sortOrder, string searchString, int? page)
         {
@@ -286,6 +308,13 @@ namespace SupportInvestigation.Controllers
 
 
             var archive = MsiRepoTicket.GetTicketSolved();
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                archive = archive.Where(s => s.Title.ToUpper().Contains(searchString.ToUpper()));
+            }
+
 
             var archiveSort = archive.OrderBy(m => m.Marchands.Name);
             switch (sortOrder)
@@ -308,10 +337,12 @@ namespace SupportInvestigation.Controllers
                     break;
 
             }
-
+         
+            //Pagination
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(archiveSort.ToPagedList(pageNumber,pageSize));
+
+            return View(archiveSort.ToPagedList(pageNumber, pageSize));
         }
 
     }

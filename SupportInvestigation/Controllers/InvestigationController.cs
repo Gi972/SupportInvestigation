@@ -69,6 +69,26 @@ namespace SupportInvestigation.Controllers
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
+            //Section Statistique
+            var ticket = MsiRepoTicket.GetTicketNoSolved();
+            int nbrNoread = 0;
+            int nbrRead = 0;
+            int nbrSolved = MsiRepoTicket.GetTicketSolved().ToList().Count;
+            foreach (var item in ticket)
+            {
+                if (item.stateRead == 0)
+                {
+                    nbrNoread++;
+                }
+                if (item.stateRead == 1)
+                {
+                    nbrRead++;
+                }
+            }
+            ViewBag.ticketNoRead = nbrNoread;
+            ViewBag.ticketRead = nbrRead;
+            ViewBag.ticketSolved = nbrSolved;
+
             return View(hypoSort.ToPagedList(pageNumber, pageSize));
         }
 

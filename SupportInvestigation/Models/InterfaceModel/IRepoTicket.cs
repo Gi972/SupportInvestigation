@@ -45,7 +45,7 @@ namespace SupportInvestigation.Models.InterfaceModel
         /// Retourne la liste des tickets dont l'état est défini à résolu.
         /// </summary>
         /// <returns></returns>
-        List<Ticket> GetTicketSolved();
+        IQueryable<Ticket> GetTicketSolved();
 
         /// <summary>
         /// Retourne les derniers tickets rentrés en base de donnée

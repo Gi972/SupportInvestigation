@@ -1,9 +1,18 @@
 ﻿@model PagedList.IPagedList<SupportInvestigation.Models.Model.Ticket>
 <script type="text/javascript">$("li.lien3").addClass(" active")</script>
 @{
-    ViewBag.Title = "Archived";
+    ViewBag.Title = "Archives";
 }
 @section navBar{
+@using (Html.BeginForm())
+{
+    <fieldset>
+    <legend>Rechercher par titre:</legend>
+   
+         @Html.TextBox("SearchString",string.Empty, new { @class = "input-medium search-query " })  
+        <input type="submit" value="Rechecher" class="btn"/>
+     </fieldset>
+}
 <form>
 <fieldset>
 <legend>Trier par:</legend>
@@ -62,6 +71,12 @@
  
  </fieldset>
 
+ <fieldset>
+    <legend>Statistiques:</legend>
+
+    Nombre total de tickets résolus @Model.TotalItemCount
+  
+    </fieldset>
 
 </form>
 

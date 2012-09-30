@@ -53,6 +53,19 @@
             sur @Model.PageCount
         </div>
     </fieldset>
+
+    <fieldset>
+    <legend>Statistiques:</legend>
+
+    Nombre total de tickets @Model.TotalItemCount
+    <br />
+    Nombre de tickets non lu :@ViewBag.ticketNoRead
+    <br />
+    Nombre de tickets en cours de résolution :@ViewBag.ticketRead
+    <br />
+    Nombre de tickets résolus :@ViewBag.ticketSolved
+    </fieldset>
+
     </form>
 }
 @Html.Partial("_Listpartial", Model)

@@ -81,10 +81,10 @@ namespace SupportInvestigation.Models.Repository
         }
 
 
-        public List<Ticket> GetTicketSolved()
+        public IQueryable<Ticket> GetTicketSolved()
         {
             var listTicket = from ticket in MsiRepo.Tickets where ticket.StateSolved == 1 select ticket;
-            return listTicket.ToList();
+            return listTicket;
         }
 
 

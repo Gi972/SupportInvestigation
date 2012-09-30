@@ -70,6 +70,8 @@
         <div class="editor-field">
             @Html.TextAreaFor(model => model.Summary, new { @class = "field span12", @rows = "1", @maxlength = "45" })
             @Html.ValidationMessageFor(model => model.Summary)
+
+
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Description)
@@ -79,7 +81,7 @@
             @Html.ValidationMessageFor(model => model.Description)
      
         <p>
-            <input type="submit" value="Create" name="Name" class="btn" />
+            <input type="submit" value="Creer le ticket" name="Name" class="btn" />
         </p>
     </fieldset>
     

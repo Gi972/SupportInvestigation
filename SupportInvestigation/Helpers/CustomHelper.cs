@@ -180,10 +180,6 @@ namespace SupportInvestigation.Helpers
         public static int LoginUserID(this HtmlHelper html ) {
 
             IRepoUser user = new RepoUser();
-
-
-
-
             return 1;
         }
     }

@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<SupportInvestigation.Models.Model.Hypothesis>
 <script type="text/javascript">    $("li.lien2").addClass(" active")</script>
 @{
-    ViewBag.Title = "ListHypo";
+    ViewBag.Title = "Investigations en cours";
 }
 @section navBar{
     <form>
@@ -49,6 +49,17 @@
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
             sur @Model.PageCount
         </div>
+    </fieldset>
+    <fieldset>
+    <legend>Statistiques:</legend>
+
+    Nombre D'investigations en cours @Model.TotalItemCount
+    <br />
+    Nombre de tickets non lus :@ViewBag.ticketNoRead
+    <br />
+    Nombre de ticket en cours de résolution :@ViewBag.ticketRead
+    <br />
+    Nombre de ticket résolus :@ViewBag.ticketSolved
     </fieldset>
     </form>
 }
